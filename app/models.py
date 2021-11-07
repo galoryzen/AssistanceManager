@@ -39,7 +39,7 @@ class PlanEstudio(Record, Model):
     
 class PlanAsignatura(Model):
     __tablename__ = 'plan_asignatura'
-    
+    id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     asignatura_id = Column(Integer, ForeignKey("asignatura.id"), nullable=False)
     asignatura = relationship("Asignatura")
     plan_id = Column(Integer, ForeignKey("plan_estudio.id"), nullable=False)
