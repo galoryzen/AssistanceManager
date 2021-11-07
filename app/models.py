@@ -36,6 +36,14 @@ class PlanEstudio(Record, Model):
     __tablename__ = 'plan_estudio'
     programa_id = Column(Integer, ForeignKey("prog_academico.id"), nullable=False)
     programa = relationship("ProgramaAcademico")
+    
+class PlanAsignatura(Model):
+    __tablename__ = 'plan_asignatura'
+    
+    asignatura_id = Column(Integer, ForeignKey("asignatura.id"), nullable=False)
+    asignatura = relationship("Asignatura")
+    plan_id = Column(Integer, ForeignKey("plan_estudio.id"), nullable=False)
+    plan = relationship("PlanEstudio")
 
 class Periodo(Record, Model):
     __tablename__ = 'periodo'
