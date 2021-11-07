@@ -2,6 +2,7 @@ from flask_appbuilder import Model
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, UniqueConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.expression import null
+from sqlalchemy.sql.schema import Sequence
 from sqlalchemy.sql.sqltypes import Date
 
 """
@@ -13,6 +14,7 @@ AuditMixin will add automatic timestamp of created and modified by who
 
 """
 class Record:
+    
     id = Column(Integer, primary_key=True, nullable=False)
     nombre = Column(String(100), nullable=False)
     
@@ -39,7 +41,7 @@ class PlanEstudio(Record, Model):
     
 class PlanAsignatura(Model):
     __tablename__ = 'plan_asignatura'
-    id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    id = Column(Integer, Sequence('id_seq'), primary_key=True)
     asignatura_id = Column(Integer, ForeignKey("asignatura.id"), nullable=False)
     asignatura = relationship("Asignatura")
     plan_id = Column(Integer, ForeignKey("plan_estudio.id"), nullable=False)
@@ -50,10 +52,8 @@ class Periodo(Record, Model):
     
 class Salon(Model):
     __tablename__ = 'salon'
-    id = Column(String(100), primary_key=True, nullable=False)
-    
-    def __repr__(self):
-        return self.id
+    id = Column(Integer, Sequence('id_seq'), primary_key=True)
+    nombre = Column(String(100), nullable=False, unique=True)
     
 class Docente(Record, Model):
     __tablename__ = 'docente'
@@ -71,12 +71,12 @@ class Curso(Record, Model):
 
 class Clase(Model):
     __tablename__ = 'clase'
-    id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    id = Column(Integer, Sequence('id_seq'), primary_key=True)
     curso_id = Column(Integer, ForeignKey("curso.id"), nullable=False)
     curso = relationship("Curso")
     inicio = Column(DateTime, nullable=False)
     duracion = Column(Integer, nullable=False)  # En minutos
-    salon_id = Column(String(100), ForeignKey("salon.id"), nullable=False)
+    salon_id = Column(Integer, ForeignKey("salon.id"), nullable=False)
     salon = relationship("Salon") 
     
     #UniqueConstraint('curso_id', 'salon_id','inicio', name="PK")
@@ -86,7 +86,7 @@ class Clase(Model):
 
 class EstudianteMatriculaCurso(Model):
     __tablename__ = 'estudiante_matricula'
-    id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    id = Column(Integer, Sequence('id_seq'), primary_key=True)
     curso_id = Column(Integer, ForeignKey("curso.id"), nullable=False)
     curso = relationship("Curso")
     periodo_id = Column(Integer, ForeignKey("periodo.id"), nullable=False)
