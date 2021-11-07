@@ -70,7 +70,7 @@ appbuilder.add_view(
 )
 
 appbuilder.add_view(
-    PlanAsignatura, "Plan de Estudio - Asignatura", icon="fa-folder-open-o", category="Universidad"
+    PlanAsignaturaView, "Plan de Estudio - Asignatura", icon="fa-folder-open-o", category="Universidad"
 )
 
 appbuilder.add_view(
@@ -94,7 +94,7 @@ appbuilder.add_view(
 )
 
 appbuilder.add_view(
-    EstudianteMatriculaCurso, "Estudiante-Matricula", icon="fa-folder-open-o", category="Universidad"
+    EstudianteMatriculaView, "Estudiante-Matricula", icon="fa-folder-open-o", category="Universidad"
 )
 
 appbuilder.add_view(
