@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursos</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}"></link>
+</head>
+<body>
+<!-- header section starts  -->
+
+<header>
+
+    <div id="menu" class="fas fa-bars"></div>
+
+    <a href="/" class="logo"><i class="fas fa-user-graduate"></i>LOGO</a>
+
+    <nav class="navbar">
+        <ul>
+            <li><a class="active" href="/classesview/listaClases">Lista de cursos</a></li>
+        </ul>
+    </nav>
+
+    <div id="login" class="fas fa-user-circle">
+        <a>{{user}}</a>  
+    </div>
+
+</header>
+
+<!-- header section ends -->
+
+<!-- course section starts  -->
+
+<section class="course" id="course">
+
+    <h1 class="heading">Cursos</h1>    
+    
+    <div class="box-container">
+    
+        <div class="box">
+            <div class="content">
+                <a href="clase.html" class="title">Bases de Datos</a>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, beatae. Modi quos excepturi id quibusdam? Molestiae quis nihil non debitis!</p>
+                <div class="info">
+                    <h3>Luis Llach</h3>
+                </div>
+            </div>
+        </div>
+    
+        <div class="box">
+            <div class="content">
+                <a href="clase.html" class="title">Soluciones Computacionales</a>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, beatae. Modi quos excepturi id quibusdam? Molestiae quis nihil non debitis!</p>
+                <div class="info">
+                    <h3>Marlon Piñeres Melo</h3>
+                </div>
+            </div>
+        </div>
+    
+        <div class="box">
+            <div class="content">
+                <a href="clase.html" class="title">Redes de Computación</a>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, beatae. Modi quos excepturi id quibusdam? Molestiae quis nihil non debitis!</p>
+                <div class="info">
+                    <h3>Richard New Village</h3>
+                </div>
+            </div>
+        </div>
+    
+        <div class="box">
+            <div class="content">
+                <a href="#" class="title">Estructura del PC I</a>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, beatae. Modi quos excepturi id quibusdam? Molestiae quis nihil non debitis!</p>
+                <div class="info">
+                    <h3>Edward Zurek</h3>
+                </div>
+            </div>
+        </div>
+    
+        <div class="box">
+            <div class="content">
+                <a href="#" class="title">GPY</a>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, beatae. Modi quos excepturi id quibusdam? Molestiae quis nihil non debitis!</p>
+                <div class="info">
+                    <h3>Peggy De La Rosa</h3>
+                </div>
+            </div>
+        </div>
+    
+        <div class="box">
+            <div class="content">
+                <a href="#" class="title">Estructura de Datos II</a>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, beatae. Modi quos excepturi id quibusdam? Molestiae quis nihil non debitis!</p>
+                <div class="info">
+                    <h3>Dew Bouquets<h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="content">
+                <a href="#" class="title">Estructura de Datos I</a>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, beatae. Modi quos excepturi id quibusdam? Molestiae quis nihil non debitis!</p>
+                <div class="info">
+                    <h3>Marlene Duarte</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="content">
+                <a href="#" class="title">POO</a>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, beatae. Modi quos excepturi id quibusdam? Molestiae quis nihil non debitis!</p>
+                <div class="info">
+                    <h3>Peter Wightman</h3>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+    
+    </section>
+</body>
+</html>

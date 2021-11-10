@@ -1,12 +1,27 @@
+from flask_appbuilder.api import expose
+from flask_appbuilder.baseviews import BaseView
+from flask_appbuilder.security.decorators import has_access
 from .models import Asignatura, Clase, Curso, Departamento, Docente, Estudiante, EstudianteMatriculaCurso, Periodo, PlanAsignatura, PlanEstudio, ProgramaAcademico, Salon
 from flask import render_template
 from flask_appbuilder.models.sqla.interface import SQLAInterface
 from flask_appbuilder import ModelView, ModelRestApi
+from flask import g
+from flask_appbuilder.security.sqla.models import User
 
 from . import appbuilder, db
+import app
 
 # TODO: Probar related views
 # related_views = [EmployeeView]
+
+class ClassesView(BaseView):
+    
+    default_view = 'listaClases'
+    @has_access
+    @expose('/listaClases')
+    def listaClases(self):
+        
+        return render_template('ListaClases.html', user=g.user)
 
 class DepartamentoView(ModelView):
     datamodel = SQLAInterface(Departamento)
@@ -51,7 +66,6 @@ class EstudianteMatriculaView(ModelView):
 class EstudianteView(ModelView):
     datamodel = SQLAInterface(Estudiante)
     add_columns=['id','nombre', 'direccion', 'cedula', 'telefono', 'plan', 'periodo']
-
 
 appbuilder.add_view(
     DepartamentoView, "Departamentos", icon="fa-folder-open-o", category="Universidad"
@@ -99,4 +113,8 @@ appbuilder.add_view(
 
 appbuilder.add_view(
     EstudianteView, "Estudiantes", icon="fa-folder-open-o", category="Universidad"
+)
+
+appbuilder.add_view(
+    ClassesView, "Lista de clases", icon="fa-folder-open-o", category="Lista de clases"
 )

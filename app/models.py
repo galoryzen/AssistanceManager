@@ -29,8 +29,10 @@ class ProgramaAcademico(Record, Model):
     departamento_id = Column(Integer, ForeignKey("departamento.id"), nullable=False)
     departamento = relationship("Departamento")
     
-class Asignatura(Record, Model):
+class Asignatura(Model):
     __tablename__ = 'asignatura'
+    id = Column(String(7), primary_key=True, nullable=False)
+    nombre = Column(String(100), nullable=False)
     departamento_id = Column(Integer, ForeignKey("departamento.id"), nullable=False)
     departamento = relationship("Departamento")
     
@@ -42,7 +44,7 @@ class PlanEstudio(Record, Model):
 class PlanAsignatura(Model):
     __tablename__ = 'plan_asignatura'
     id = Column(Integer, Sequence('id_seq'), primary_key=True)
-    asignatura_id = Column(Integer, ForeignKey("asignatura.id"), nullable=False)
+    asignatura_id = Column(String(100), ForeignKey("asignatura.id"), nullable=False)
     asignatura = relationship("Asignatura")
     plan_id = Column(Integer, ForeignKey("plan_estudio.id"), nullable=False)
     plan = relationship("PlanEstudio")
@@ -66,7 +68,7 @@ class Curso(Record, Model):
     __tablename__ = 'curso'
     docente_id = Column(Integer, ForeignKey("docente.id"), nullable=False)
     docente = relationship("Docente")
-    asignatura_id = Column(Integer, ForeignKey("asignatura.id"), nullable=False)
+    asignatura_id = Column(String(100), ForeignKey("asignatura.id"), nullable=False)
     asignatura = relationship("Asignatura")    
 
 class Clase(Model):
@@ -102,7 +104,3 @@ class Estudiante(Model, Record):
     plan = relationship("PlanEstudio")
     periodo_id = Column(Integer, ForeignKey("periodo.id"), nullable=False)
     periodo = relationship("Periodo")
-    
-    
-    def __repr__(self):
-        return self.estudiante_id

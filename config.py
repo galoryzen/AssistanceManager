@@ -10,13 +10,9 @@ from conn_string import cs
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-# Your App secret key
 SECRET_KEY = "\2\1thisismyscretkey\1\2\e\y\y\h"
-
-# The SQLAlchemy connection string.
 SQLALCHEMY_DATABASE_URI = cs
-# SQLALCHEMY_DATABASE_URI = 'mysql://myapp@localhost/myapp'
-# SQLALCHEMY_DATABASE_URI = 'postgresql://root:password@localhost/myapp'
+
 
 # Flask-WTF flag for CSRF
 CSRF_ENABLED = True
@@ -25,7 +21,7 @@ CSRF_ENABLED = True
 # GLOBALS FOR APP Builder
 # ------------------------------
 # Uncomment to setup Your App name
-# APP_NAME = "My App Name"
+APP_NAME = "Assistance Manager"
 
 # Uncomment to setup Setup an App icon
 # APP_ICON = "static/img/logo.jpg"
@@ -69,16 +65,6 @@ BABEL_DEFAULT_LOCALE = "en"
 # Your application default translation path
 BABEL_DEFAULT_FOLDER = "translations"
 # The allowed translation for you app
-LANGUAGES = {
-    "en": {"flag": "gb", "name": "English"},
-    "pt": {"flag": "pt", "name": "Portuguese"},
-    "pt_BR": {"flag": "br", "name": "Pt Brazil"},
-    "es": {"flag": "es", "name": "Spanish"},
-    "de": {"flag": "de", "name": "German"},
-    "zh": {"flag": "cn", "name": "Chinese"},
-    "ru": {"flag": "ru", "name": "Russian"},
-    "pl": {"flag": "pl", "name": "Polish"},
-}
 # ---------------------------------------------------
 # Image and file configuration
 # ---------------------------------------------------
@@ -92,6 +78,17 @@ IMG_UPLOAD_FOLDER = basedir + "/app/static/uploads/"
 IMG_UPLOAD_URL = "/static/uploads/"
 # Setup image size default is (300, 200, True)
 # IMG_SIZE = (300, 200, True)
+
+FAB_ROLES = {
+    "Estudiante": [
+        [".*", 'can_listaClases'],
+        [".*", 'menu_access'],
+    ],
+    "Profesor": [
+        [".*", 'can_listaClases'],
+        [".*", 'menu_access'],
+    ]
+}
 
 # Theme configuration
 # these are located on static/appbuilder/css/themes
