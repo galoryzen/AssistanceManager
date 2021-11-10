@@ -2,90 +2,125 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cursos</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Cursos</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-    <link rel="stylesheet" href="/css/clase.css">
+	<link rel="stylesheet" href="{{url_for('static',filename='css/clase.css')}}">
+	<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
 </head>
 
 <body>
-    <header>
+
+	<header>
 
         <div id="menu" class="fas fa-bars"></div>
-
-        <a href="/templates/index.html" class="Volver"><span>&#10229;</span>Volver</a>
+        
+       
 
         <nav class="navbar">
+			
             <ul>
-                <li><a class="active" href="#course">curso DB02M4D9</a></li>
+					<li><a href="/">Inicio</a></li>
+					<li><a href="#asistencia">Ingresar</a></li>
+					<li><a href="#lista">Lista de Clase</a></li>
+					
+					
+					
             </ul>
         </nav>
 
-        <div id="login" class="fas fa-user-circle">
-            <a>gornangrau</a>
+        <div id="login" class="fas fa-address-card">
+			<a style="color: black" >IST-9044</a>
         </div>
 
     </header>
 
-    <div class="sidebar">
-        <h1>Bienvenido S040558RR</h1>
-        <ul>
-            <li><a>Jonathan Arias</a></li>
-            <li><a>Isaac Blanco</a></li>
-            <li><a>Camilo Céspedes</a></li>
-            <li><a>Jonathan Arias</a></li>
-            <li><a>Jonathan Arias</a></li>
-            <li><a>Isaac Blanco</a></li>
-            <li><a>Sebastián Gonzalez</a></li>
-            <li><a>Camilo Céspedes</a></li>
-            <li><a>Camilo Céspedes</a></li>
-            <li><a>Raul López </a></li>
-            <li><a>Sthephany Rojas</a></li>
-            <li><a>Camilo Céspedes</a></li>
-            <li><a>Camilo Céspedes</a></li>
-            <li><a>Jonathan Arias</a></li>
-            <li><a>Isaac Blanco</a></li>
-            <li><a>Camilo Céspedes</a></li>
-            <li><a>Jonathan Arias</a></li>
-            <li><a>Jonathan Arias</a></li>
-            <li><a>Isaac Blanco</a></li>
-            <li><a>Sebastián Gonzalez</a></li>
-            <li><a>Camilo Céspedes</a></li>
-            <li><a>Camilo Céspedes</a></li>
-            <li><a>Raul López </a></li>
-            <li><a>Sthephany Rojas</a></li>
-            <li><a>Camilo Céspedes</a></li>
-            <li><a>Camilo Céspedes</a></li>
-        </ul>
-    </div>
+		<div class="banner_image">
 
-    <section>
-        <div class="left">
-            <h2>Ingresar Asistencia</h2>
-            <form method="post">
-                <div class="txt_field">
-                    <input type="text" required>
-                    <span></span>
-                    <label>Código Docente</label>
-                </div>
-                <div class="txt_field">
-                    <input type="text" required>
-                    <span></span>
-                    <label>Código de la Clase</label>
-                </div>
-               <input type="submit" value="Registrar Asistencia">
-            </form>
-        </div>
-    </section>
+           <div class = "card">
+               <div class = "card-text">
+                   <h2>IST-9044</h2>
+                   <h3>Martes</h3>
+                   <p>2:30 pm - 5:30 pm</p>
+                   <h3>Salón</h3>
+                   <p>6k</p>
+
+               </div> 
+
+           </div> 
+            
+			<div class="banner_content">
+
+				<div class='clock'>
+					<div class='hour'>
+						<div class='hr' id='hr'></div>
+					</div>
+					<div class='min'>
+						<div class='mn' id='mn'></div>
+					</div>
+					<div class='sec'>
+						<div class='sc' id='sc'></div>
+					</div>
+
+				</div>
+				<script type="text/javascript">
+					const deg = 6;
+					const hr = document.querySelector('#hr');
+					const mn = document.querySelector('#mn');
+					const sc = document.querySelector('#sc');
+
+					setInterval(() => {
+						let day = new Date();
+						let hh = day.getHours() * 30;
+						let mm = day.getMinutes() * deg;
+						let ss = day.getSeconds() * deg;
+
+						hr.style.transform = `rotateZ(${(hh)+(mm/12)}deg)`;
+						mn.style.transform = `rotateZ(${mm}deg)`;
+						sc.style.transform = `rotateZ(${ss}deg)`;
+					})
 
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="js/script.js"></script>
+				</script>
+			</div>
+		</div>
+        <div class="services">
+			<h1 class="title">Registra tu Asistencia</h1>
+		</div>
+
+		<div class="asistencia" id="asistencia">
+			<form>
+				<h3>Ingresa a Clase</h3>
+		
+				<label for="codC">Código de Clase</label>
+				<input type="text" placeholder="Ej: IST 28429" id="codC">
+		
+				<label for="codP">Código de Profesor</label>
+				<input type="text" placeholder="Ej: 28429" id="codP">
+		
+				
+				<button class="button-5" role="button">Registrarse</button>
+
+
+		</div>
+
+		
+
+		<div class="services" id="lista">
+			<h1 class="title">Estudiantes</h1>
+			
+		</div>  
+		
+		<div class="footer">
+			<a href="#">© 2021 UNIVERSIDAD GONAPEZ</a>
+		</div>
+
+	</div>
+
 </body>
 
 </html>

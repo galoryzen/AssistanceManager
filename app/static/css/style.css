@@ -1,5 +1,5 @@
 :root{
-    --gradient:linear-gradient(90deg, #0f8bf1, #0063b4);
+    --gradient:linear-gradient(90deg, #f1c40f, #f39c12);
 }
 
 *{
@@ -8,7 +8,6 @@
     box-sizing: border-box;
     border:none; outline: none;
     text-decoration: none;
-    text-transform: capitalize;
     transition: all .2s linear;
 }
 
@@ -118,7 +117,7 @@ header .navbar ul li a:hover{
 
 header #login{
     font-size: 3rem;
-    color:#fff;
+    color: black;
     cursor: pointer;
 }
 
@@ -334,4 +333,18 @@ header #menu{
         width:100%;
     }
 
+}
+
+/* footer */
+.footer{
+	width: 100%;
+	text-align: center;
+	background: #444444;
+	padding: 20px 0;
+    
+}
+
+.footer a{
+	color: #fff;
+    font-size: 15px;
 }

@@ -22,6 +22,12 @@ class ClassesView(BaseView):
     def listaClases(self):
         
         return render_template('ListaClases.html', user=g.user)
+    
+    @has_access
+    @expose('/clase/<id>')
+    def Clase(self, id):
+        
+        return render_template('Clase.html', user=g.user)
 
 class DepartamentoView(ModelView):
     datamodel = SQLAInterface(Departamento)
