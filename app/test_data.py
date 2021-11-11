@@ -1,17 +1,18 @@
+from datetime import datetime, timedelta
 from flask_appbuilder.cli import create_admin
 from flask import current_app
 import logging
+
+from sqlalchemy.sql.sqltypes import DateTime
 from app import db
-from app.models import Asignatura, Curso, Departamento, Docente, Estudiante, EstudianteMatriculaCurso, Periodo, PlanAsignatura, PlanEstudio, ProgramaAcademico
+from app.models import Asignatura, Clase, Curso, Departamento, Docente, Estudiante, EstudianteMatriculaCurso, Periodo, PlanAsignatura, PlanEstudio, ProgramaAcademico, Salon
 log = logging.getLogger(__name__)
 
-roles = {
-    "Admin": current_app.appbuilder.sm.find_role(
-        current_app.appbuilder.sm.auth_role_admin
-    ),
-    "Estudiante": current_app.appbuilder.sm.find_role("Estudiante"),
-    "Profesor": current_app.appbuilder.sm.find_role("Profesor"),
-}
+try:
+    db.drop_all()
+    db.create_all()
+except Exception as e:
+    print(e)
 
 deps= [
     Departamento(id=1, nombre='Dpto. de Economía'),
@@ -98,23 +99,23 @@ planesAsignatura = [
 ]
 
 docentes = [
-    Docente(id=1, nombre='Luis Llach', direccion='su casa', cedula='72174800', departamento_id=9),
-    Docente(id=2, nombre='Ricardo Villanueva', direccion='Pto', cedula='72348481', departamento_id=9),
-    Docente(id=3, nombre='Eduardo Zurek Varela', direccion='Soledad', cedula='72167852', departamento_id=9),
-    Docente(id=4, nombre='Marlon Pineres', direccion='atlantico', cedula='72054493', departamento_id=9),
-    Docente(id=5, nombre='Miguel Jimeno', direccion='Oracle', cedula='72245666', departamento_id=9)
+    Docente(id=1, nombre='Luis Llach', direccion='su casa', email='llach@uninorte.edu.co', cedula='72174800', departamento_id=9),
+    Docente(id=2, nombre='Ricardo Villanueva', direccion='Pto', email='rvillanueva@uninorte.edu.co', cedula='72348481', departamento_id=9),
+    Docente(id=3, nombre='Eduardo Zurek Varela', direccion='Soledad', email='ezurek@uninorte.edu.co', cedula='72167852', departamento_id=9),
+    Docente(id=4, nombre='Marlon Pineres', direccion='atlantico', email='mpineres@uninorte.edu.co', cedula='72054493', departamento_id=9),
+    Docente(id=5, nombre='Miguel Jimeno', direccion='Oracle', email='mjimeno@uninorte.edu.co', cedula='72245666', departamento_id=9)
 ]
 
 cursos = [
-    Curso(id=8087, nombre='Redes de computacion', docente_id=2, asignatura_id='IST7191'),
-    Curso(id=8081, nombre='Bases de datos', docente_id=1, asignatura_id='IST7111'),
-    Curso(id=8082, nombre='Bases de datos', docente_id=5, asignatura_id='IST7111'),
-    Curso(id=8050, nombre='Estructura del Computador I', docente_id=3, asignatura_id='IST4012'),
-    Curso(id=8051, nombre='Estructura del Computador I', docente_id=3, asignatura_id='IST4012'),
+    Curso(id=8087, docente_id=2, asignatura_id='IST4012'),
+    Curso(id=8081, docente_id=1, asignatura_id='IST7111'),
+    Curso(id=8082, docente_id=5, asignatura_id='IST7111'),
+    Curso(id=8050, docente_id=3, asignatura_id='IST4360'),
+    Curso(id=8051, docente_id=3, asignatura_id='IST4360'),
 ]
 
 estudiantes = [
-    Estudiante(id=1, nombre='Raul Lopez', direccion='su casa', cedula='1001805233', telefono='123', plan_id=1, periodo_id=1)
+    Estudiante(id=1, nombre='Raul Lopez', direccion='su casa', email='jlopezr@uninorte.edu.co', cedula='1001805233', telefono='123', plan_id=1, periodo_id=1)
 ]
 
 EMC = [
@@ -123,12 +124,23 @@ EMC = [
     EstudianteMatriculaCurso(id=3, curso_id=8050, periodo_id=1, estudiante_id=1),
 ]
 
+salones = [
+    Salon(id='31G2'),
+    Salon(id='33E'),
+    Salon(id='25E'),
+    Salon(id='23D'),
+    Salon(id='VIRTUAL'),
+    Salon(id='31K')
+]
+
+clases = [
+    Clase(curso_id=8087, inicio=datetime.now() + timedelta(minutes=2), fin=datetime.now() + timedelta(minutes=122), salon_id='VIRTUAL'),
+    Clase(curso_id=8050, inicio=datetime.now() + timedelta(minutes=5), fin=datetime.now() + timedelta(minutes=125), salon_id='31K'),
+]
+
 try:
-    user = current_app.appbuilder.sm.add_user(
-        "admin", "admin", "admin", "admin@admin.com", roles["Admin"], "admin"
-    )
-    
     [db.session.add_all(deps)]
+    [db.session.add_all(salones)]
     [db.session.add_all(asignaturas)]
     [db.session.add_all(periodos)]
     [db.session.add_all(progsAcad)]
@@ -138,6 +150,7 @@ try:
     [db.session.add_all(cursos)]
     [db.session.add_all(estudiantes)]
     [db.session.add_all(EMC)]
+    [db.session.add_all(clases)]
     db.session.commit()
 except Exception as e:
     print(e)

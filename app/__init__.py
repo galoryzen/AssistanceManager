@@ -16,7 +16,10 @@ appbuilder = AppBuilder(app, db.session)
 @app.cli.command("initdata")
 def init_db():
     from . import test_data
+    
+@app.cli.command("createusers")
+def init_users():
+    from . import create_users
 
 
 from . import models, views
-

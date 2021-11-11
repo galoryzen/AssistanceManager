@@ -7,3 +7,4 @@ env
 venv
 *.sublime*
 conn_string.py
+test.py

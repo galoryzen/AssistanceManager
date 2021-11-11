@@ -32,46 +32,75 @@ class ClassesView(BaseView):
 class DepartamentoView(ModelView):
     datamodel = SQLAInterface(Departamento)
     add_columns=['id','nombre']
-    
+    list_columns=['id','nombre']
+    show_columns=['id','nombre']
+
 class ProgramaAcademicoView(ModelView):
     datamodel = SQLAInterface(ProgramaAcademico)
     add_columns=['id','nombre','departamento']
+    list_columns=['id','nombre','departamento']
+    show_columns=['id','nombre','departamento']
     
 class AsignaturaView(ModelView):
     datamodel = SQLAInterface(Asignatura)
     add_columns=['id','nombre','departamento']
+    list_columns=['id','nombre','departamento']
+    show_columns=['id','nombre','departamento']
     
 class PlanEstudioView(ModelView):
     datamodel = SQLAInterface(PlanEstudio)
     add_columns=['id','nombre','programa']
+    list_columns=['id','nombre','programa']
+    show_columns=['id','nombre','programa']
 
 class PlanAsignaturaView(ModelView):
     datamodel = SQLAInterface(PlanAsignatura)
+    add_columns=['id','asignatura','plan']
+    list_columns=['id','asignatura','plan']
+    show_columns=['id','asignatura','plan']
+    
     
 class PeriodoView(ModelView):
     datamodel = SQLAInterface(Periodo)
     add_columns=['id','nombre']
+    list_columns=['id','nombre']
+    show_columns=['id','nombre']
     
 class SalonView(ModelView):
     datamodel = SQLAInterface(Salon)
+    add_columns=['id']
+    list_columns=['id']
+    show_columns=['id']
     
 class DocenteView(ModelView):
     datamodel = SQLAInterface(Docente)
-    add_columns=['id','nombre', 'direccion', 'cedula', 'departamento']
+    add_columns=['id','nombre', 'direccion', 'email','cedula', 'departamento']
+    list_columns=['id','nombre', 'direccion', 'email', 'cedula', 'departamento']
+    show_columns=['id','nombre', 'direccion', 'email', 'cedula', 'departamento']
 
 class CursoView(ModelView):
     datamodel = SQLAInterface(Curso)
-    add_columns=['id','nombre', 'docente', 'asignatura']
+    add_columns=['id', 'docente', 'asignatura']
+    list_columns=['id', 'docente', 'asignatura']
+    show_columns=['id', 'docente', 'asignatura']
     
 class ClaseView(ModelView):
     datamodel = SQLAInterface(Clase)
+    add_columns=['id', 'curso', 'inicio', 'fin', 'salon']
+    list_columns=['id', 'curso', 'inicio', 'fin', 'salon']
+    show_columns=['id', 'curso', 'inicio', 'fin', 'salon']
     
 class EstudianteMatriculaView(ModelView):
     datamodel = SQLAInterface(EstudianteMatriculaCurso)
+    add_columns=['curso', 'periodo', 'estudiante']
+    list_columns=['curso', 'periodo', 'estudiante']
+    show_columns=['curso', 'periodo', 'estudiante']
 
 class EstudianteView(ModelView):
     datamodel = SQLAInterface(Estudiante)
     add_columns=['id','nombre', 'direccion', 'cedula', 'telefono', 'plan', 'periodo']
+    list_columns=['id','nombre', 'direccion', 'cedula', 'telefono', 'plan', 'periodo']
+    show_columns=['id','nombre', 'direccion', 'cedula', 'telefono', 'plan', 'periodo']
 
 appbuilder.add_view(
     DepartamentoView, "Departamentos", icon="fa-folder-open-o", category="Universidad"

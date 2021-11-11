@@ -36,6 +36,9 @@ class Asignatura(Model):
     departamento_id = Column(Integer, ForeignKey("departamento.id"), nullable=False)
     departamento = relationship("Departamento")
     
+    def __repr__(self):
+        return self.nombre
+    
 class PlanEstudio(Record, Model):
     __tablename__ = 'plan_estudio'
     programa_id = Column(Integer, ForeignKey("prog_academico.id"), nullable=False)
@@ -44,7 +47,7 @@ class PlanEstudio(Record, Model):
 class PlanAsignatura(Model):
     __tablename__ = 'plan_asignatura'
     id = Column(Integer, Sequence('id_seq'), primary_key=True)
-    asignatura_id = Column(String(100), ForeignKey("asignatura.id"), nullable=False)
+    asignatura_id = Column(String(7), ForeignKey("asignatura.id"), nullable=False)
     asignatura = relationship("Asignatura")
     plan_id = Column(Integer, ForeignKey("plan_estudio.id"), nullable=False)
     plan = relationship("PlanEstudio")
@@ -54,37 +57,42 @@ class Periodo(Record, Model):
     
 class Salon(Model):
     __tablename__ = 'salon'
-    id = Column(Integer, Sequence('id_seq'), primary_key=True)
-    nombre = Column(String(100), nullable=False, unique=True)
+    id = Column(String(20), primary_key=True)
+    
+    def __repr__(self):
+        return self.id
     
 class Docente(Record, Model):
     __tablename__ = 'docente'
     direccion = Column(String(100), nullable=False)
     cedula = Column(String(100), nullable=False, unique=True)
+    email = Column(String(100), nullable=False, unique=True)
     departamento_id = Column(Integer, ForeignKey("departamento.id"), nullable=False)
     departamento = relationship("Departamento")
     
-class Curso(Record, Model):
+class Curso(Model):
     __tablename__ = 'curso'
+    id = Column(Integer, primary_key=True, nullable=False)
     docente_id = Column(Integer, ForeignKey("docente.id"), nullable=False)
     docente = relationship("Docente")
-    asignatura_id = Column(String(100), ForeignKey("asignatura.id"), nullable=False)
-    asignatura = relationship("Asignatura")    
+    asignatura_id = Column(String(7), ForeignKey("asignatura.id"), nullable=False)
+    asignatura = relationship("Asignatura")
+    
+    def __repr__(self):
+        return str(self.docente) + " - "+str(self.asignatura)  + " - " + str(self.id)    
 
 class Clase(Model):
     __tablename__ = 'clase'
-    id = Column(Integer, Sequence('id_seq'), primary_key=True)
+    id = Column(Integer, Sequence('id_seq', start=1), primary_key=True)
     curso_id = Column(Integer, ForeignKey("curso.id"), nullable=False)
     curso = relationship("Curso")
     inicio = Column(DateTime, nullable=False)
-    duracion = Column(Integer, nullable=False)  # En minutos
-    salon_id = Column(Integer, ForeignKey("salon.id"), nullable=False)
+    fin = Column(DateTime, nullable=False)
+    salon_id = Column(String(20), ForeignKey("salon.id"), nullable=False)
     salon = relationship("Salon") 
-    
-    #UniqueConstraint('curso_id', 'salon_id','inicio', name="PK")
 
     def __repr__(self):
-        return self.curso_id
+        return self.curso+" - " + self.inicio + " - " + self.salon
 
 class EstudianteMatriculaCurso(Model):
     __tablename__ = 'estudiante_matricula'
@@ -101,6 +109,7 @@ class Estudiante(Model, Record):
     cedula = Column(String(100), nullable=False, unique=True)
     telefono = Column(String(100), nullable=False, unique=True)
     plan_id = Column(Integer, ForeignKey("plan_estudio.id"), nullable=False)
+    email = Column(String(100), nullable=False, unique=True)
     plan = relationship("PlanEstudio")
     periodo_id = Column(Integer, ForeignKey("periodo.id"), nullable=False)
     periodo = relationship("Periodo")
