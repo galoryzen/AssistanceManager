@@ -5,9 +5,9 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Cursos</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 	<link rel="stylesheet" href="{{url_for('static',filename='css/clase.css')}}">
 	<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
 </head>
@@ -16,108 +16,131 @@
 
 	<header>
 
-        <div id="menu" class="fas fa-bars"></div>
-        
-       
+		<div id="menu" class="fas fa-bars"></div>
 
-        <nav class="navbar">
-			
-            <ul>
-					<li><a href="/">Inicio</a></li>
-					<li><a href="#asistencia">Ingresar</a></li>
-					<li><a href="/classesview/listaClases">Lista de clases</a></li>
-					
-					
-					
-            </ul>
-        </nav>
+		<nav class="navbar">
 
-        <div id="login" class="fas fa-address-card">
-			<a style="color: black" >IST-9044</a>
-        </div>
+			<ul>
+				<li><a href="/">Inicio</a></li>
+				<li><a href="#asistencia">Ingresar</a></li>
+				<li><a href="/classesview/listaClases">Lista de clases</a></li>
 
-    </header>
+			</ul>
+		</nav>
 
-		<div class="banner_image">
+		<div id="login" class="fas fa-address-card">
+			<a style="color: black">IST-9044</a>
+		</div>
 
-           <div class = "card">
-               <div class = "card-text">
-                   <h2>IST-9044</h2>
-                   <h3>Martes</h3>
-                   <p>2:30 pm - 5:30 pm</p>
-                   <h3>Salón</h3>
-                   <p>6k</p>
+	</header>
 
-               </div> 
+	<div class="banner_image">
 
-           </div> 
-            
-			<div class="banner_content">
+		<div class="card">
+			<div class="card-text">
+				<h2>IST-9044</h2>
+				<h3>Martes</h3>
+				<p>2:30 pm - 5:30 pm</p>
+				<h3>Salón</h3>
+				<p>6k</p>
 
-				<div class='clock'>
-					<div class='hour'>
-						<div class='hr' id='hr'></div>
-					</div>
-					<div class='min'>
-						<div class='mn' id='mn'></div>
-					</div>
-					<div class='sec'>
-						<div class='sc' id='sc'></div>
-					</div>
-
-				</div>
-				<script type="text/javascript">
-					const deg = 6;
-					const hr = document.querySelector('#hr');
-					const mn = document.querySelector('#mn');
-					const sc = document.querySelector('#sc');
-
-					setInterval(() => {
-						let day = new Date();
-						let hh = day.getHours() * 30;
-						let mm = day.getMinutes() * deg;
-						let ss = day.getSeconds() * deg;
-
-						hr.style.transform = `rotateZ(${(hh)+(mm/12)}deg)`;
-						mn.style.transform = `rotateZ(${mm}deg)`;
-						sc.style.transform = `rotateZ(${ss}deg)`;
-					})
-
-
-
-				</script>
 			</div>
-		</div>
-        <div class="services">
-			<h1 class="title">Registra tu Asistencia</h1>
-		</div>
-
-		<div class="asistencia" id="asistencia">
-			<form>
-				<h3>Ingresa a Clase</h3>
-		
-				<label for="codC">Código de Clase</label>
-				<input type="text" placeholder="Ej: IST 28429" id="codC">
-		
-				<label for="codP">Código de Profesor</label>
-				<input type="text" placeholder="Ej: 28429" id="codP">
-		
-				
-				<button class="button-5" role="button">Registrarse</button>
-
 
 		</div>
 
-		
+		<div class="banner_content">
 
-		<div class="services" id="lista">
-			<h1 class="title">Estudiantes</h1>
-			
-		</div>  
-		
-		<div class="footer">
-			<a href="#">© 2021 UNIVERSIDAD GONAPEZ</a>
+			<div class='clock'>
+				<div class='hour'>
+					<div class='hr' id='hr'></div>
+				</div>
+				<div class='min'>
+					<div class='mn' id='mn'></div>
+				</div>
+				<div class='sec'>
+					<div class='sc' id='sc'></div>
+				</div>
+
+			</div>
+			<script type="text/javascript">
+				const deg = 6;
+				const hr = document.querySelector('#hr');
+				const mn = document.querySelector('#mn');
+				const sc = document.querySelector('#sc');
+
+				setInterval(() => {
+					let day = new Date();
+					let hh = day.getHours() * 30;
+					let mm = day.getMinutes() * deg;
+					let ss = day.getSeconds() * deg;
+
+					hr.style.transform = `rotateZ(${(hh) + (mm / 12)}deg)`;
+					mn.style.transform = `rotateZ(${mm}deg)`;
+					sc.style.transform = `rotateZ(${ss}deg)`;
+				})
+
+
+
+			</script>
 		</div>
+	</div>
+
+	<div class="services">
+		<h1 class="title">Registra tu Asistencia</h1>
+	</div>
+
+	<div class="asistencia" id="asistencia">
+		<form>
+			<h3>Ingresa a Clase</h3>
+
+			<label for="codC">Código de Clase</label>
+			<input type="text" placeholder="Ej: IST 28429" id="codC">
+
+			<label for="codP">Código de Profesor</label>
+			<input type="text" placeholder="Ej: 28429" id="codP">
+
+
+			<button class="button-5" role="button">Registrarse</button>
+
+
+	</div>
+
+
+	<div class="services" id="lista">
+		<h1 class="title">Estudiantes</h1>
+	</div>
+
+	<div class='tableContainer'>
+		<table class="table">
+			<thead>
+				<tr class='head'>
+					<th>Asistencia Clase -*FECHA*-</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr>
+					<td>Raul Gonzalez</td>
+				</tr>
+				<tr>
+					<td>Sebastian Hernández</td>
+				</tr>
+				<tr>
+					<td>Marcela López</td>
+				</tr>
+				<tr>
+					<td>Jack Mendez</td>
+				</tr>
+
+			</tbody>
+		</table>
+	</div>
+
+
+
+	<div class="footer">
+		<a href="#">© 2021 UNIVERSIDAD GONAPEZ</a>
+	</div>
 
 	</div>
 

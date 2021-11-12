@@ -199,7 +199,7 @@ p{
 
 .asistencia{
     width: 100%;
-    background-image: url(/salon.jpg);
+    background-image: url(salon.jpg);
     background-size: 1650px;
     height: 100vh;
 }	
@@ -210,7 +210,7 @@ form{
     background-color: rgba(255,255,255,0.13);
     position: absolute;
     transform: translate(-50%,-50%);
-    top: 1280px;
+    top: 140%;
     left: 50%;
     border-radius: 10px;
     backdrop-filter: blur(10px);
@@ -306,9 +306,7 @@ input{
 
 
 .about,
-.services,
-.contactus,
-.ourteam{
+.services{
 	text-align: center;
 	padding: 5% 10%;
 }
@@ -337,3 +335,58 @@ input{
     color: #fb2274;
     margin-bottom: 15px;
 }
+
+/*table*/
+.tableContainer{
+    width: 100%;
+	display:table;
+	overflow-x:auto;
+	margin-top: 50px;
+	margin-bottom: 500px;
+	padding-bottom: 500px;
+	align-items: center;
+}
+
+table {
+	display: block;
+	position: absolute;
+	left: 50%;
+	top: 250%;
+	transform: translate(-50%, -50%);
+	border-collapse: collapse;
+	height: 200px;
+}
+
+tr {
+	transition: all .2s ease-in;
+	font-size: 22px;
+}
+
+th, td{
+	
+	border: 1px solid #bdc3c7;
+	padding: 12px;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+	font-size: 30px;
+
+}
+
+#head{
+	background-color: #c85000;
+	color: white;
+}
+
+tr:hover{
+	background-color: #fa64007c;
+	transform: scale(1.02);
+	box-shadow: 2px 2px 12px rgba(0,0,0,0.2), -1px -1px 8px rgba(0,0,0,0.2);
+}
+
+@media only screen and (max-width:800px){
+	table{
+		width: 90%;
+	}
+}
+
+
