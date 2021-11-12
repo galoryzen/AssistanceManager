@@ -107,15 +107,16 @@ docentes = [
 ]
 
 cursos = [
-    Curso(id=8087, docente_id=2, asignatura_id='IST4012'),
-    Curso(id=8081, docente_id=1, asignatura_id='IST7111'),
-    Curso(id=8082, docente_id=5, asignatura_id='IST7111'),
-    Curso(id=8050, docente_id=3, asignatura_id='IST4360'),
-    Curso(id=8051, docente_id=3, asignatura_id='IST4360'),
+    Curso(id=8087, docente_id=2, asignatura_id='IST4012', periodo_id=1),
+    Curso(id=8081, docente_id=1, asignatura_id='IST7111', periodo_id=1),
+    Curso(id=8082, docente_id=5, asignatura_id='IST7111', periodo_id=1),
+    Curso(id=8050, docente_id=3, asignatura_id='IST4360', periodo_id=1),
+    Curso(id=8051, docente_id=3, asignatura_id='IST4360', periodo_id=1),
 ]
 
 estudiantes = [
-    Estudiante(id=1, nombre='Raul Lopez', direccion='su casa', email='jlopezr@uninorte.edu.co', cedula='1001805233', telefono='123', plan_id=1, periodo_id=1)
+    Estudiante(id=1, nombre='Raul Lopez', direccion='su casa', email='jlopezr@uninorte.edu.co', cedula='1001805233', telefono='123', plan_id=1, periodo_id=1),
+    Estudiante(id=2, nombre='Sebastian Gonzalez', direccion='Soledad', email='sgonza@uninorte.edu.co', cedula='1023125233', telefono='1234', plan_id=1, periodo_id=1)
 ]
 
 EMC = [

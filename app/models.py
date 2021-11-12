@@ -77,6 +77,8 @@ class Curso(Model):
     docente = relationship("Docente")
     asignatura_id = Column(String(7), ForeignKey("asignatura.id"), nullable=False)
     asignatura = relationship("Asignatura")
+    periodo_id = Column(Integer, ForeignKey("periodo.id"), nullable=False)
+    periodo = relationship("Periodo")
     
     def __repr__(self):
         return str(self.docente) + " - "+str(self.asignatura)  + " - " + str(self.id)    
@@ -103,6 +105,10 @@ class EstudianteMatriculaCurso(Model):
     periodo = relationship("Periodo")
     estudiante_id = Column(Integer, ForeignKey("estudiante.id"), nullable=False)
     estudiante = relationship("Estudiante")
+    
+    def __repr__(self):
+        return str(self.curso_id)
+    
     
 class Estudiante(Model, Record):
     direccion = Column(String(100), nullable=False)

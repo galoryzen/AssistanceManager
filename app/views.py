@@ -7,6 +7,7 @@ from flask_appbuilder.models.sqla.interface import SQLAInterface
 from flask_appbuilder import ModelView, ModelRestApi
 from flask import g
 from flask_appbuilder.security.sqla.models import User
+from flask import current_app
 
 from . import appbuilder, db
 import app
@@ -21,12 +22,46 @@ class ClassesView(BaseView):
     @expose('/listaClases')
     def listaClases(self):
         
-        return render_template('ListaClases.html', user=g.user)
+        roles = {
+        "Admin": current_app.appbuilder.sm.find_role(
+            current_app.appbuilder.sm.auth_role_admin
+        ),
+        "Estudiante": current_app.appbuilder.sm.find_role("Estudiante"),
+        "Profesor": current_app.appbuilder.sm.find_role("Profesor"),
+        }
+        
+        if g.user.roles[0] == roles['Estudiante']:
+            id = db.session.query(Estudiante.id).filter_by(email=g.user.email).one()[0]
+            data = db.session.query(EstudianteMatriculaCurso.curso_id, Periodo.nombre, Asignatura.nombre, Docente.nombre,Clase.inicio, Clase.fin, Clase.salon_id).filter_by(estudiante_id=id).\
+                join(Periodo, Periodo.id==EstudianteMatriculaCurso.periodo_id).\
+                join(Curso, EstudianteMatriculaCurso.curso_id==Curso.id).\
+                join(Asignatura, Curso.asignatura_id==Asignatura.id).\
+                join(Clase, Clase.curso_id==Curso.id).\
+                join(Docente, Docente.id==Curso.docente_id).all()
+            db.session.close()
+            return render_template('ListaClases.html', user=g.user, data=data)
+        if g.user.roles[0] == roles['Profesor']:
+            id = db.session.query(Docente.id).filter_by(email=g.user.email).one()[0]
+            data = db.session.query(Curso.id, Periodo.nombre, Asignatura.nombre, Docente.nombre, Clase.inicio, Clase.fin, Clase.salon_id).filter_by(docente_id=id).\
+                join(Periodo, Periodo.id==Curso.periodo_id).\
+                join(Asignatura, Asignatura.id==Curso.asignatura_id).\
+                join(Docente, Docente.id==Curso.docente_id).\
+                join(Clase, Clase.curso_id==Curso.id).all()
+            db.session.close()
+            return render_template('ListaClases.html', user=g.user, data=data)
+        else:
+            id = db.session.query(Docente.id).filter_by(email=g.user.email).one()[0]
+            data = db.session.query(Curso.id, Periodo.nombre, Asignatura.nombre, Docente.nombre, Clase.inicio, Clase.fin, Clase.salon_id).\
+                join(Periodo, Periodo.id==Curso.periodo_id).\
+                join(Asignatura, Asignatura.id==Curso.asignatura_id).\
+                join(Docente, Docente.id==Curso.docente_id).\
+                join(Clase, Clase.curso_id==Curso.id).all()
+            db.session.close()
+            return render_template('ListaClases.html', user=g.user, data=data)
     
     @has_access
     @expose('/clase/<id>')
     def Clase(self, id):
-        
         return render_template('Clase.html', user=g.user)
 
 class DepartamentoView(ModelView):

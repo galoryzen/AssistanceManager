@@ -17,7 +17,7 @@
 
     <div id="menu" class="fas fa-bars"></div>
 
-    <a href="/" class="logo"><i class="fas fa-user-graduate"></i>LOGO</a>
+    <a href="/" class="logo"><i class="fas fa-user-graduate"></i>INICIO</a>
 
     <nav class="navbar">
         <ul>
@@ -37,89 +37,21 @@
 
 <section class="course" id="course">
 
-    <h1 class="heading">Cursos</h1>    
+    <h1 class="heading">Clases</h1>    
     
     <div class="box-container">
-    
-        <div class="box">
-            <div class="content">
-                <a href="clase/1" class="title">Bases de Datos</a>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, beatae. Modi quos excepturi id quibusdam? Molestiae quis nihil non debitis!</p>
-                <div class="info">
-                    <h3>Luis Llach</h3>
-                </div>
-            </div>
-        </div>
-    
-        <div class="box">
-            <div class="content">
-                <a href="clase/1" class="title">Soluciones Computacionales</a>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, beatae. Modi quos excepturi id quibusdam? Molestiae quis nihil non debitis!</p>
-                <div class="info">
-                    <h3>Marlon Piñeres Melo</h3>
-                </div>
-            </div>
-        </div>
-    
-        <div class="box">
-            <div class="content">
-                <a href="clase/1" class="title">Redes de Computación</a>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, beatae. Modi quos excepturi id quibusdam? Molestiae quis nihil non debitis!</p>
-                <div class="info">
-                    <h3>Richard New Village</h3>
-                </div>
-            </div>
-        </div>
-    
-        <div class="box">
-            <div class="content">
-                <a href="#" class="title">Estructura del PC I</a>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, beatae. Modi quos excepturi id quibusdam? Molestiae quis nihil non debitis!</p>
-                <div class="info">
-                    <h3>Edward Zurek</h3>
-                </div>
-            </div>
-        </div>
-    
-        <div class="box">
-            <div class="content">
-                <a href="#" class="title">GPY</a>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, beatae. Modi quos excepturi id quibusdam? Molestiae quis nihil non debitis!</p>
-                <div class="info">
-                    <h3>Peggy De La Rosa</h3>
-                </div>
-            </div>
-        </div>
-    
-        <div class="box">
-            <div class="content">
-                <a href="#" class="title">Estructura de Datos II</a>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, beatae. Modi quos excepturi id quibusdam? Molestiae quis nihil non debitis!</p>
-                <div class="info">
-                    <h3>Dew Bouquets<h3>
-                </div>
-            </div>
-        </div>
 
+        {% for clase in data %}
         <div class="box">
             <div class="content">
-                <a href="#" class="title">Estructura de Datos I</a>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, beatae. Modi quos excepturi id quibusdam? Molestiae quis nihil non debitis!</p>
+                <a href="clase/{{clase[0]}}" class="title">{{clase[2]}}</a>
+                <p><b>Inicio:</b> {{clase[4]}}<br><b>Fin:  </b>{{clase[5]}}</p>
                 <div class="info">
-                    <h3>Marlene Duarte</h3>
+                    <h3>{{clase[3]}} - {{clase[1]}}</h3>
                 </div>
             </div>
         </div>
-
-        <div class="box">
-            <div class="content">
-                <a href="#" class="title">POO</a>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, beatae. Modi quos excepturi id quibusdam? Molestiae quis nihil non debitis!</p>
-                <div class="info">
-                    <h3>Peter Wightman</h3>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     
     </div>
     
