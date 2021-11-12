@@ -133,9 +133,9 @@ class EstudianteMatriculaView(ModelView):
 
 class EstudianteView(ModelView):
     datamodel = SQLAInterface(Estudiante)
-    add_columns=['id','nombre', 'direccion', 'cedula', 'telefono', 'plan', 'periodo']
-    list_columns=['id','nombre', 'direccion', 'cedula', 'telefono', 'plan', 'periodo']
-    show_columns=['id','nombre', 'direccion', 'cedula', 'telefono', 'plan', 'periodo']
+    add_columns=['id','nombre', 'direccion', 'email', 'cedula', 'telefono', 'plan', 'periodo']
+    list_columns=['id','nombre', 'direccion', 'email', 'cedula', 'telefono', 'plan', 'periodo']
+    show_columns=['id','nombre', 'direccion', 'email', 'cedula', 'telefono', 'plan', 'periodo']
 
 appbuilder.add_view(
     DepartamentoView, "Departamentos", icon="fa-folder-open-o", category="Universidad"
