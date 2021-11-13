@@ -122,8 +122,7 @@ class Estudiante(Model, Record):
     
     
 class Asistencia(Model):
-    id = Column(Integer, Sequence('id_seq', start=1), primary_key=True)
-    
+    id = Column(String(15), primary_key=True)
     clase_id = Column(Integer, ForeignKey("clase.id"), nullable=False)
     clase = relationship("Clase")
     estudiante_id = Column(Integer, ForeignKey("estudiante.id"), nullable=True)
@@ -134,6 +133,7 @@ class Asistencia(Model):
     estado = Column(String(10), nullable = True)
     curso_id = Column(Integer, ForeignKey("curso.id"), nullable=False)
     curso = relationship("Curso")
+    
     
     def __repr__(self):
         if self.estudiante_id == None:

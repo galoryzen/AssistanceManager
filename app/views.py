@@ -1,14 +1,16 @@
+from datetime import datetime
 from flask.helpers import url_for
 from flask_appbuilder.api import expose
 from flask_appbuilder.baseviews import BaseView
 from flask_appbuilder.security.decorators import has_access
 from .models import Asignatura, Asistencia, Clase, Curso, Departamento, Docente, Estudiante, EstudianteMatriculaCurso, Periodo, PlanAsignatura, PlanEstudio, ProgramaAcademico, Salon
-from flask import render_template
+from flask import render_template, request
 from flask_appbuilder.models.sqla.interface import SQLAInterface
 from flask_appbuilder import ModelView, ModelRestApi
 from flask import g
 from flask_appbuilder.security.sqla.models import User
 from flask import current_app, redirect
+from conn_string import password, getRandomID, getEstadoAsistencia
 
 from . import appbuilder, db
 import app
@@ -18,9 +20,6 @@ import app
 
 
 class ClassesView(BaseView):
-    
-
-
     
     default_view = 'listaClases'
     @has_access
@@ -78,21 +77,34 @@ class ClassesView(BaseView):
         data = db.session.query(Asistencia.estudiante_id, Estudiante.nombre, Asistencia.estado).filter(Asistencia.clase_id==id).\
                             join(Estudiante, Estudiante.id==Asistencia.estudiante_id).all()
                             
-        data = [[dato if dato != None else '' for dato in row] for row in data]
-        
+        data = [[dato if dato != None else 'Sin registrar' for dato in row] for row in data]
+                            
         clase = db.session.query(Clase.id, Clase.inicio, Clase.fin, Clase.salon_id).filter(Clase.id==id).one()
 
         c = [clase[1].date(), clase[1].strftime('%A'), clase[1].time(), clase[2].time(), clase[3]]
         
-        
-        materia = db.session.query(Clase.id, Curso.asignatura_id, Asignatura.nombre).filter(Clase.id==1).\
+        materia = db.session.query(Clase.id, Curso.asignatura_id, Asignatura.nombre).filter(Clase.id==id).\
             join(Curso, Curso.id==Clase.curso_id).\
             join(Asignatura, Asignatura.id==Curso.asignatura_id).one()
         
         if g.user.roles[0] == roles['Estudiante']:
             
-            return render_template('Clase.html', user=g.user, data=data, materia=materia, clase=c)
+            if c[4] == 'VIRTUAL':
+                my_id = db.session.query(Estudiante.id).filter(Estudiante.email==g.user.email).one()[0]
+                code = db.session.query(Asistencia.id).filter(Asistencia.clase_id==id, Asistencia.estudiante_id==my_id).one_or_none()
+                if code == None:
+                    code = 'Por generar'
+                else:
+                    code = code[0]
+            else:
+                code = 'Dado por el profesor'
+            
+            return render_template('Clase.html', user=g.user, id=id, data=data, materia=materia, clase=c,  class_code=code)
         else:
+            
+            if c[4] != 'VIRTUAL':
+                data = db.session.query(Asistencia.estudiante_id, Estudiante.nombre, Asistencia.id).filter(Asistencia.clase_id==id).\
+                            join(Estudiante, Estudiante.id==Asistencia.estudiante_id).all()
             
             s1='Al presionar este botón se generará toda la lista de clases para que los estudiantes puedan ingresar su asistencia'
             s2='Iniciar la clase'
@@ -108,18 +120,25 @@ class ClassesView(BaseView):
             return redirect(f'http://localhost:5000/classesview/clase/{id}')
         
         
-        profesor = db.session.query(Clase.id, Clase.curso_id, Curso.docente_id).filter(Clase.id==id).\
+        profesor = db.session.query(Clase.id, Clase.curso_id, Curso.docente_id, Clase.inicio).filter(Clase.id==id).\
                 join(Curso, Curso.id==Clase.curso_id).one()
 
         estudiantes = db.session.query(Clase.id, Clase.curso_id, EstudianteMatriculaCurso.estudiante_id).filter(Clase.id==id).\
                 join(EstudianteMatriculaCurso, EstudianteMatriculaCurso.curso_id==Clase.curso_id).all()
-                
+        
+        
+        a_id = getRandomID()
+        while checkID(a_id):
+            a_id = getRandomID()
         asistencias = [
-            Asistencia(clase_id=profesor[0], curso_id=profesor[1], docente_id=profesor[2])
+            Asistencia(id=a_id,  clase_id=profesor[0], curso_id=profesor[1], docente_id=profesor[2], hora_asistencia=datetime.now(), estado=getEstadoAsistencia(current=datetime.now(), inicio=profesor[3]))
         ]
 
         for estudiante in estudiantes:
-            asistencias += [Asistencia(clase_id=estudiante[0], curso_id=estudiante[1], estudiante_id=estudiante[2])]
+            a_id = getRandomID()
+            while checkID(a_id):
+                a_id = getRandomID()
+            asistencias += [Asistencia(id=a_id, clase_id=estudiante[0], curso_id=estudiante[1], estudiante_id=estudiante[2])]
             
         try:
             db.session.add_all(asistencias)
@@ -129,6 +148,32 @@ class ClassesView(BaseView):
             print(e)
             db.session.rollback()
         
+        return redirect(f'http://localhost:5000/classesview/clase/{id}')
+    
+    @has_access
+    @expose('/registrarse/<id>', methods=['POST'])
+    def Registrarse(self, id):
+        
+        codigo_asistencia = request.form['codC']
+        print(codigo_asistencia)
+
+        test = db.session.query(Asistencia.id).filter(Asistencia.id==codigo_asistencia).all()
+        
+        if len(test)==0:
+            return redirect(f'http://localhost:5000/classesview/clase/{id}')
+        
+        inicio_clase = db.session.query(Clase.inicio).filter(Clase.id==id).one()[0]
+        
+        try:
+            db.session.query(Asistencia).filter(Asistencia.id==codigo_asistencia).\
+                                            update({Asistencia.hora_asistencia: datetime.now(), Asistencia.estado: getEstadoAsistencia(inicio=inicio_clase, current=datetime.now())})
+            db.session.commit()
+            db.session.close()
+            return redirect(f'http://localhost:5000/classesview/clase/{id}')
+        except Exception as e:
+            print(e)
+            db.session.rollback()
+            
         return redirect(f'http://localhost:5000/classesview/clase/{id}')
 
 class DepartamentoView(ModelView):
@@ -255,3 +300,11 @@ appbuilder.add_view(
 appbuilder.add_view(
     ClassesView, "Lista de clases", icon="fa-folder-open-o", category="Lista de clases"
 )
+
+def checkID(id):
+    a = db.session.query(Asistencia.id).filter(Asistencia.id==id).all()
+    
+    if len(a)!=0:
+        return True
+    else:
+        return False

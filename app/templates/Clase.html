@@ -29,7 +29,7 @@
 		</nav>
 
 		<div id="login" class="fas fa-address-card">
-			<a style="color: black">IST-9044</a>
+			<a style="color: black">{{user}}</a>
 		</div>
 
 	</header>
@@ -38,11 +38,13 @@
 
 		<div class="card">
 			<div class="card-text">
-				<h2>IST-9044</h2>
-				<h3>Martes</h3>
-				<p>2:30 pm - 5:30 pm</p>
+				<h2>{{materia[1]}}</h2>
+				<h3>{{clase[1]}}</h3>
+				<p>{{clase[2]}} - {{clase[3]}}</p>
 				<h3>Salón</h3>
-				<p>6k</p>
+				<p>{{clase[4]}}</p>
+				<h3>Codigo de la clase:</h3>
+				<p>{{class_code}}</p>
 
 			</div>
 
@@ -90,18 +92,18 @@
 	</div>
 
 	<div class="asistencia" id="asistencia">
-		<form>
-			<h3>Ingresa a Clase</h3>
+		<form action='/classesview/registrarse/{{id}}' method="POST">
+			<h3>Registra tu asistencia</h3>
 
 			<label for="codC">Código de Clase</label>
-			<input type="text" placeholder="Ej: IST 28429" id="codC">
+			<input type="text" placeholder="Ej: IST 28429" id="codC" name="codC">
 
 			<label for="codP">Código de Profesor</label>
-			<input type="text" placeholder="Ej: 28429" id="codP">
+			<input type="text" placeholder="Ej: 28429" id="codP" name="codP">
 
 
 			<button class="button-5" role="button">Registrarse</button>
-
+		</form>
 
 	</div>
 
@@ -114,24 +116,16 @@
 		<table class="table">
 			<thead>
 				<tr class='head'>
-					<th>Asistencia Clase -*FECHA*-</th>
+					<th>{{materia[2]}} {{clase[0]}}</th>
 				</tr>
 			</thead>
 
 			<tbody>
+			{% for estudiante in data %}
 				<tr>
-					<td>Raul Gonzalez</td>
+					<td>{{estudiante[0]}} - {{estudiante[1]}} - {{estudiante[2]}}</td>
 				</tr>
-				<tr>
-					<td>Sebastian Hernández</td>
-				</tr>
-				<tr>
-					<td>Marcela López</td>
-				</tr>
-				<tr>
-					<td>Jack Mendez</td>
-				</tr>
-
+			{% endfor %}
 			</tbody>
 		</table>
 	</div>
@@ -139,7 +133,7 @@
 
 
 	<div class="footer">
-		<a href="#">© 2021 UNIVERSIDAD GONAPEZ</a>
+		<a href="#">© 2021 UNIVERSIDAD GONAPEZ-GRAU</a>
 	</div>
 
 	</div>
