@@ -50,7 +50,6 @@ class ClassesView(BaseView):
             db.session.close()
             return render_template('ListaClases.html', user=g.user, data=data)
         else:
-            id = db.session.query(Docente.id).filter_by(email=g.user.email).one()[0]
             data = db.session.query(Curso.id, Periodo.nombre, Asignatura.nombre, Docente.nombre, Clase.inicio, Clase.fin, Clase.salon_id).\
                 join(Periodo, Periodo.id==Curso.periodo_id).\
                 join(Asignatura, Asignatura.id==Curso.asignatura_id).\

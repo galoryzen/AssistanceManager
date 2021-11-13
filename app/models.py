@@ -98,7 +98,7 @@ class Clase(Model):
 
 class EstudianteMatriculaCurso(Model):
     __tablename__ = 'estudiante_matricula'
-    id = Column(Integer, Sequence('id_seq'), primary_key=True)
+    id = Column(Integer, Sequence('id_seq', start=1), primary_key=True)
     curso_id = Column(Integer, ForeignKey("curso.id"), nullable=False)
     curso = relationship("Curso")
     periodo_id = Column(Integer, ForeignKey("periodo.id"), nullable=False)
@@ -119,3 +119,19 @@ class Estudiante(Model, Record):
     plan = relationship("PlanEstudio")
     periodo_id = Column(Integer, ForeignKey("periodo.id"), nullable=False)
     periodo = relationship("Periodo")
+    
+    
+class Asistencia(Model):
+    id = Column(Integer, Sequence('id_seq', start=1), primary_key=True)
+    estudiante_id = Column(Integer, ForeignKey("estudiante.id"), nullable=True)
+    estudiante = relationship("Estudiante")
+    docente_id = Column(Integer, ForeignKey("docente.id"), nullable=True)
+    docente = relationship("Docente")
+    hora_asistencia = Column(DateTime, nullable=True)
+    estado = Column(String(10), nullable = True)
+    curso_id = Column(Integer, ForeignKey("curso.id"), nullable=False)
+    curso = relationship("Curso")
+    
+    def __repr__(self):
+        if self.estudiante_id == None:
+            return self.estudiante_id + " - " + self.hora_asistencia + " - " + self.estado + " - " + self.curso_id

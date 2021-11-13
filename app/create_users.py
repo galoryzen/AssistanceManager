@@ -27,4 +27,12 @@ current_app.appbuilder.sm.add_user(
 
 current_app.appbuilder.sm.add_user(
     "llach", "Luis", "Llach", "llach@uninorte.edu.co", roles["Profesor"], "123"
-    )
+)
+
+current_app.appbuilder.sm.add_user(
+    "sgonza", "Sebastian", "Gonzalez", "sgonza@uninorte.edu.co", roles["Estudiante"], "123"
+)
+
+current_app.appbuilder.sm.add_user(
+    "mhernandez", "Marcela", "Hernandez", "mhernandez@uninorte.edu.co", roles["Estudiante"], "123"
+)

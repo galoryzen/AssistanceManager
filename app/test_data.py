@@ -116,13 +116,19 @@ cursos = [
 
 estudiantes = [
     Estudiante(id=1, nombre='Raul Lopez', direccion='su casa', email='jlopezr@uninorte.edu.co', cedula='1001805233', telefono='123', plan_id=1, periodo_id=1),
-    Estudiante(id=2, nombre='Sebastian Gonzalez', direccion='Soledad', email='sgonza@uninorte.edu.co', cedula='1023125233', telefono='1234', plan_id=1, periodo_id=1)
+    Estudiante(id=2, nombre='Sebastian Gonzalez', direccion='Barranquillami', email='sgonza@uninorte.edu.co', cedula='1023125233', telefono='1234', plan_id=1, periodo_id=1),
+    Estudiante(id=3, nombre='Marcela Hernandez', direccion='Quillami, Barrio de los millonarios', email='mhernandez@uninorte.edu.co', cedula='1067125233', telefono='12345', plan_id=1, periodo_id=1)
 ]
 
 EMC = [
-    EstudianteMatriculaCurso(id=1, curso_id=8087, periodo_id=1, estudiante_id=1),
-    EstudianteMatriculaCurso(id=2, curso_id=8081, periodo_id=1, estudiante_id=1),
-    EstudianteMatriculaCurso(id=3, curso_id=8050, periodo_id=1, estudiante_id=1),
+    EstudianteMatriculaCurso(curso_id=8087, periodo_id=1, estudiante_id=1),
+    EstudianteMatriculaCurso(curso_id=8081, periodo_id=1, estudiante_id=1),
+    EstudianteMatriculaCurso(curso_id=8050, periodo_id=1, estudiante_id=1),
+    EstudianteMatriculaCurso(curso_id=8087, periodo_id=1, estudiante_id=2),
+    EstudianteMatriculaCurso(curso_id=8081, periodo_id=1, estudiante_id=2),
+    EstudianteMatriculaCurso(curso_id=8050, periodo_id=1, estudiante_id=2),
+    EstudianteMatriculaCurso(curso_id=8082, periodo_id=1, estudiante_id=3),
+    EstudianteMatriculaCurso(curso_id=8050, periodo_id=1, estudiante_id=3),
 ]
 
 salones = [
@@ -135,8 +141,14 @@ salones = [
 ]
 
 clases = [
-    Clase(curso_id=8087, inicio=datetime.now() + timedelta(minutes=2), fin=datetime.now() + timedelta(minutes=122), salon_id='VIRTUAL'),
-    Clase(curso_id=8050, inicio=datetime.now() + timedelta(minutes=5), fin=datetime.now() + timedelta(minutes=125), salon_id='31K'),
+    # Clases de Redes
+    Clase(curso_id=8087, inicio=datetime.now() + timedelta(minutes=5), fin=datetime.now() + timedelta(minutes=125), salon_id='VIRTUAL'), # De prueba a los 5 min de ejecutar el script
+    Clase(curso_id=8087, inicio=datetime(2021, 11, 18, 9, 30, 0, 0), fin=datetime(2021, 11, 18, 11, 30, 0, 0), salon_id='VIRTUAL'), # Jueves 9:30 - 11:30 Redes
+    Clase(curso_id=8087, inicio=datetime(2021, 11, 19, 9, 30, 0, 0), fin=datetime(2021, 11, 18, 10, 30, 0, 0), salon_id='VIRTUAL'), # Viernes 9:30 - 10:30 Redes
+    Clase(curso_id=8050, inicio=datetime(2021, 11, 15, 12, 30, 0, 0), fin=datetime(2021, 11, 15, 14, 30, 0, 0), salon_id='31K'), #Lunes 12:30 - 2:30 Estructuras
+    Clase(curso_id=8050, inicio=datetime(2021, 11, 17, 9, 30, 0, 0), fin=datetime(2021, 11, 17, 10, 30, 0, 0), salon_id='31K'), #Miercoles 9:30 - 10:30 Estructuras
+    Clase(curso_id=8082, inicio=datetime(2021, 11, 16, 10, 30, 0, 0), fin=datetime(2021, 11, 16, 12, 30, 0, 0), salon_id='31G2'), 
+    Clase(curso_id=8082, inicio=datetime(2021, 11, 17, 15, 30, 0, 0), fin=datetime(2021, 11, 17, 17, 30, 0, 0), salon_id='31G2'),
 ]
 
 try:
