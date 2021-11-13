@@ -1,5 +1,5 @@
 :root{
-    --gradient:linear-gradient(90deg, #f1c40f, #f39c12);
+    --gradient:linear-gradient(90deg, #e70000, #970000);
 }
 
 *{
@@ -12,7 +12,7 @@
 }
 
 *::selection{
-    background:#f39c12;
+    background:#970000;
     color:#fff;
 }
 
@@ -30,7 +30,7 @@ html::-webkit-scrollbar-track{
 }
 
 html::-webkit-scrollbar-thumb{
-    background:linear-gradient(#f1c40f, #f39c12);
+    background:linear-gradient(#e70000, #970000);
 }
 
 section{
@@ -112,7 +112,7 @@ header .navbar ul li a{
 
 header .navbar ul li a.active,
 header .navbar ul li a:hover{
-    color:#444;
+    color:#fff;
 }
 
 header #login{
@@ -339,11 +339,11 @@ header #menu{
 .footer{
 	width: 100%;
 	text-align: center;
-	background: #444444;
+	background: #040404;
 	padding: 20px 0;
     position: fixed;
-  left: 0;
-  bottom: 0;
+    left: 0;
+    bottom: 0;
     
 }
 
