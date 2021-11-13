@@ -94,7 +94,7 @@ class Clase(Model):
     salon = relationship("Salon") 
 
     def __repr__(self):
-        return self.curso+" - " + self.inicio + " - " + self.salon
+        return self.curso + " - " + self.inicio + " - " + self.salon
 
 class EstudianteMatriculaCurso(Model):
     __tablename__ = 'estudiante_matricula'
@@ -123,6 +123,9 @@ class Estudiante(Model, Record):
     
 class Asistencia(Model):
     id = Column(Integer, Sequence('id_seq', start=1), primary_key=True)
+    
+    clase_id = Column(Integer, ForeignKey("clase.id"), nullable=False)
+    clase = relationship("Clase")
     estudiante_id = Column(Integer, ForeignKey("estudiante.id"), nullable=True)
     estudiante = relationship("Estudiante")
     docente_id = Column(Integer, ForeignKey("docente.id"), nullable=True)
