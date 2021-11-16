@@ -10,7 +10,10 @@ from flask_appbuilder import ModelView, ModelRestApi
 from flask import g
 from flask_appbuilder.security.sqla.models import User
 from flask import current_app, redirect
-from conn_string import password, getRandomID, getEstadoAsistencia
+from datetime import timedelta, datetime
+import time
+import threading
+import random, string
 
 from . import appbuilder, db
 import app
@@ -76,8 +79,13 @@ class ClassesView(BaseView):
         
         data = db.session.query(Asistencia.estudiante_id, Estudiante.nombre, Asistencia.estado).filter(Asistencia.clase_id==id).\
                             join(Estudiante, Estudiante.id==Asistencia.estudiante_id).all()
+        
+        data_profesor = db.session.query(Asistencia.docente_id, Docente.nombre, Asistencia.id).filter(Asistencia.clase_id==id).\
+                            join(Docente, Docente.id==Asistencia.docente_id).all()
                             
         data = [[dato if dato != None else 'Sin registrar' for dato in row] for row in data]
+        
+        data = data_profesor + data
                             
         clase = db.session.query(Clase.id, Clase.inicio, Clase.fin, Clase.salon_id).filter(Clase.id==id).one()
 
@@ -105,9 +113,16 @@ class ClassesView(BaseView):
             if c[4] != 'VIRTUAL':
                 data = db.session.query(Asistencia.estudiante_id, Estudiante.nombre, Asistencia.id).filter(Asistencia.clase_id==id).\
                             join(Estudiante, Estudiante.id==Asistencia.estudiante_id).all()
+                
+                data_profesor = db.session.query(Asistencia.docente_id, Docente.nombre, Asistencia.id).filter(Asistencia.clase_id==3).\
+                            join(Docente, Docente.id==Asistencia.docente_id).all()
+
+                data = data_profesor + data
             
             s1='Al presionar este botón se generará toda la lista de clases para que los estudiantes puedan ingresar su asistencia'
             s2='Iniciar la clase'
+            
+            
             
             return render_template('ClaseProfesor.html', user=g.user, button=s2, label=s1, id=id, data=data, materia=materia, clase=c)
     
@@ -155,12 +170,20 @@ class ClassesView(BaseView):
     def Registrarse(self, id):
         
         codigo_asistencia = request.form['codC']
-        print(codigo_asistencia)
+        codigo_profesor = request.form['codP']
 
-        test = db.session.query(Asistencia.id).filter(Asistencia.id==codigo_asistencia).all()
+        test = db.session.query(Asistencia.clase_id).filter(Asistencia.id==codigo_asistencia).all()
         
         if len(test)==0:
             return redirect(f'http://localhost:5000/classesview/clase/{id}')
+        
+        test_profesor = db.session.query(Asistencia.clase_id).filter(Asistencia.id==codigo_profesor).all()
+        
+        if len(test)==0:
+            return redirect(f'http://localhost:5000/classesview/clase/{id}')
+        elif test[0] != test_profesor[0]:
+            return redirect(f'http://localhost:5000/classesview/clase/{id}')
+        
         
         inicio_clase = db.session.query(Clase.inicio).filter(Clase.id==id).one()[0]
         
@@ -308,3 +331,32 @@ def checkID(id):
         return True
     else:
         return False
+    
+def getRandomID(n=15):
+    return ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(n))
+
+def getEstadoAsistencia(inicio: datetime, current: datetime):
+    if current <= inicio + timedelta(minutes=10):
+        return 'Asistencia'
+    elif current <= inicio + timedelta(minutes=20):
+        return 'Retraso'
+    else:
+        return 'Ausencia'
+    
+def check_asistencia():
+    
+    while True:
+        
+        print('Actualicé')
+        clases = db.session.query(Clase.id).filter(Clase.inicio + timedelta(minutes=20) < datetime.now()).all()
+        clases = [clase[0] for clase in clases]
+
+        data = db.session.query(Asistencia.id, Asistencia.clase_id, Asistencia.docente_id, Asistencia.estudiante_id, Asistencia.estado).filter(Asistencia.clase_id.in_(clases), Asistencia.estado==None).\
+                        update({Asistencia.estado: 'Ausencia'}, synchronize_session=False)
+        
+        db.session.commit()
+        time.sleep(10)
+
+Assistance_Thread = threading.Thread(target=check_asistencia)
+Assistance_Thread.daemon = True
+Assistance_Thread.start()
