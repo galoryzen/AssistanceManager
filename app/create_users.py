@@ -21,18 +21,34 @@ current_app.appbuilder.sm.add_user(
     "admin", "admin", "admin", "admin@admin.com", roles["Admin"], "admin"
 )
 
-current_app.appbuilder.sm.add_user(
-    "jlopezr", "Raul", "Lopez", "jlopezr@uninorte.edu.co", roles["Estudiante"], "123"
-)
+data = db.session.query(Docente.nombre, Docente.email).all()
 
-current_app.appbuilder.sm.add_user(
-    "llach", "Luis", "Llach", "llach@uninorte.edu.co", roles["Profesor"], "123"
-)
+d = []
+    
+for profesor in data:
+    s = profesor[0].split(" ")
+    nombre = s[2]
+    apellidos = s[0] + " " + s[1]
+    usuario = profesor[1].split("@")[0]
+    d.append((nombre, apellidos, usuario, profesor[1]))
 
-current_app.appbuilder.sm.add_user(
-    "sgonza", "Sebastian", "Gonzalez", "sgonza@uninorte.edu.co", roles["Estudiante"], "123"
-)
+for profesor in d:
+    current_app.appbuilder.sm.add_user(
+        profesor[2], profesor[0], profesor[1], profesor[3], roles["Profesor"], profesor[2]
+    )
 
-current_app.appbuilder.sm.add_user(
-    "mhernandez", "Marcela", "Hernandez", "mhernandez@uninorte.edu.co", roles["Estudiante"], "123"
-)
+data2 = db.session.query(Estudiante.nombre, Estudiante.email).all()
+    
+a = []
+
+for estudiante in data2:
+    s = estudiante[0].split(" ")
+    nombre = s[2]
+    apellidos = s[0] + " " + s[1]
+    usuario = estudiante[1].split("@")[0]
+    a.append((nombre, apellidos, usuario, estudiante[1]))
+    
+for estudiante in a:
+    current_app.appbuilder.sm.add_user(
+        estudiante[2], estudiante[0], estudiante[1], estudiante[3], roles["Estudiante"], estudiante[2]
+    )

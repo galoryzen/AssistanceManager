@@ -134,7 +134,6 @@ class Asistencia(Model):
     curso_id = Column(Integer, ForeignKey("curso.id"), nullable=False)
     curso = relationship("Curso")
     
-    
     def __repr__(self):
         if self.estudiante_id == None:
             return self.estudiante_id + " - " + self.hora_asistencia + " - " + self.estado + " - " + self.curso_id
