@@ -50,7 +50,7 @@ p{
     grid-template-areas: "text" "stats";
     font-family: 'Open Sans', sans-serif;
     border-radius: 18px;
-    background: white;
+    background: #FCFCFC;
     box-shadow: 5px 5px 15px rgba(0,0,0,0.9);
     text-align: center;
     margin-right: 300px;
@@ -62,7 +62,7 @@ p{
 }
 
 .card-text .date{
-    color:#e70000;
+    color:#D9230F;
     font-size: 100px;
 }
 
@@ -82,7 +82,7 @@ p{
 }
 
 .card-text h3{
-    color:#e70000;
+    color:#D9230F;
     margin-bottom: 8px;
     font-size: 21px;
     text-align: left;
@@ -264,7 +264,7 @@ input{
 .button-5 {
 	align-items: center;
 	background-clip: padding-box;
-	background-color: #e70000;
+	background-color: #D9230F;
 	border: 1px solid transparent;
 	border-radius: .25rem;
 	box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
@@ -294,7 +294,7 @@ input{
   
   .button-5:hover,
   .button-5:focus {
-	background-color: #970000;
+	background-color: #A91B0C;
 	box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
   }
   
@@ -303,7 +303,7 @@ input{
   }
   
   .button-5:active {
-	background-color: #970000;
+	background-color: #A91B0C;
 	box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
 	transform: translateY(0);
   }
@@ -317,7 +317,7 @@ input{
 
 /* Services */
 .services{
-	background: #f5f5f5;
+	background: #FCFCFC;
 }
 
 .diff_services {
@@ -377,19 +377,19 @@ th, td{
 }
 
 #head{
-	background-color: #e70000;
+	background-color: #D9230F;
 	color: white;
 }
 
 tbody tr:hover{
-	background-color: #e70000;
+	background-color: #D9230F;
 	color: white;
 	transform: scale(1.02);
 	box-shadow: 2px 2px 12px rgba(0,0,0,0.2), -1px -1px 8px rgba(0,0,0,0.2);
 }
 
 thead:hover{
-	background-color: #970000;
+	background-color: #A91B0C;
 	color: white;
 	transform: scale(1.02);
 	box-shadow: 2px 2px 12px rgba(0,0,0,0.2), -1px -1px 8px rgba(0,0,0,0.2);
