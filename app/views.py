@@ -343,20 +343,20 @@ def getEstadoAsistencia(inicio: datetime, current: datetime):
     else:
         return 'Ausencia'
     
-def check_asistencia():
+# def check_asistencia():
     
-    while True:
+#     while True:
         
-        print('Actualicé')
-        clases = db.session.query(Clase.id).filter(Clase.inicio + timedelta(minutes=20) < datetime.now()).all()
-        clases = [clase[0] for clase in clases]
+#         print('Actualicé')
+#         clases = db.session.query(Clase.id).filter(Clase.inicio + timedelta(minutes=20) < datetime.now()).all()
+#         clases = [clase[0] for clase in clases]
 
-        data = db.session.query(Asistencia.id, Asistencia.clase_id, Asistencia.docente_id, Asistencia.estudiante_id, Asistencia.estado).filter(Asistencia.clase_id.in_(clases), Asistencia.estado==None).\
-                        update({Asistencia.estado: 'Ausencia'}, synchronize_session=False)
+#         data = db.session.query(Asistencia.id, Asistencia.clase_id, Asistencia.docente_id, Asistencia.estudiante_id, Asistencia.estado).filter(Asistencia.clase_id.in_(clases), Asistencia.estado==None).\
+#                         update({Asistencia.estado: 'Ausencia'}, synchronize_session=False)
         
-        db.session.commit()
-        time.sleep(10)
+#         db.session.commit()
+#         time.sleep(10)
 
-Assistance_Thread = threading.Thread(target=check_asistencia)
-Assistance_Thread.daemon = True
-Assistance_Thread.start()
+# Assistance_Thread = threading.Thread(target=check_asistencia)
+# Assistance_Thread.daemon = True
+# Assistance_Thread.start()
