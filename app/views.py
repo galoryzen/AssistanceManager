@@ -130,13 +130,17 @@ class ClassesView(BaseView):
     @expose('/iniciarclase/<id>')
     def IniciarClase(self, id):
         
-        data = db.session.query(Asistencia).filter(Asistencia.clase_id==id).all()
-        if len(data) != 0:
+        if db.session.query(Clase.estado).filter(Clase.id==id).one()[0]:
+            print('entr1')
             return redirect(f'http://localhost:5000/classesview/clase/{id}')
         
         
         profesor = db.session.query(Clase.id, Clase.curso_id, Curso.docente_id, Clase.inicio).filter(Clase.id==id).\
                 join(Curso, Curso.id==Clase.curso_id).one()
+                
+        if datetime.now() > profesor[3] + timedelta(minutes=20) or datetime.now() < profesor[3]:
+            print('entre')
+            return redirect(f'http://localhost:5000/classesview/clase/{id}')
 
         estudiantes = db.session.query(Clase.id, Clase.curso_id, EstudianteMatriculaCurso.estudiante_id).filter(Clase.id==id).\
                 join(EstudianteMatriculaCurso, EstudianteMatriculaCurso.curso_id==Clase.curso_id).all()
@@ -157,11 +161,14 @@ class ClassesView(BaseView):
             
         try:
             db.session.add_all(asistencias)
+            db.session.query(Clase).filter(Clase.id==id).\
+                                    update({Clase.estado: True})
             db.session.commit()
             db.session.close
         except Exception as e:
             print(e)
             db.session.rollback()
+            
         
         return redirect(f'http://localhost:5000/classesview/clase/{id}')
     
@@ -172,21 +179,25 @@ class ClassesView(BaseView):
         codigo_asistencia = request.form['codC']
         codigo_profesor = request.form['codP']
 
-        test = db.session.query(Asistencia.clase_id).filter(Asistencia.id==codigo_asistencia).all()
+        test = db.session.query(Asistencia.clase_id, Asistencia.estado).filter(Asistencia.id==codigo_asistencia).all()
         
         if len(test)==0:
             return redirect(f'http://localhost:5000/classesview/clase/{id}')
         
         test_profesor = db.session.query(Asistencia.clase_id).filter(Asistencia.id==codigo_profesor).all()
         
-        if len(test)==0:
+        if len(test)==0 or test[0][1]!=None:
+            print(1)
+            print(test[0][1])
             return redirect(f'http://localhost:5000/classesview/clase/{id}')
-        elif test[0] != test_profesor[0]:
+        elif test[0][0] != test_profesor[0][0]:
+            print(2)
+            print(test[0][0])
+            print(test_profesor[0][0])
             return redirect(f'http://localhost:5000/classesview/clase/{id}')
         
         
-        inicio_clase = db.session.query(Clase.inicio).filter(Clase.id==id).one()[0]
-        
+        inicio_clase = db.session.query(Asistencia.hora_asistencia).filter(Asistencia.id==codigo_profesor).one()[0]    
         try:
             db.session.query(Asistencia).filter(Asistencia.id==codigo_asistencia).\
                                             update({Asistencia.hora_asistencia: datetime.now(), Asistencia.estado: getEstadoAsistencia(inicio=inicio_clase, current=datetime.now())})
@@ -343,20 +354,22 @@ def getEstadoAsistencia(inicio: datetime, current: datetime):
     else:
         return 'Ausencia'
     
-# def check_asistencia():
+def check_asistencia():
     
-#     while True:
+    while True:
         
-#         print('Actualicé')
-#         clases = db.session.query(Clase.id).filter(Clase.inicio + timedelta(minutes=20) < datetime.now()).all()
-#         clases = [clase[0] for clase in clases]
+        print('Actualicé')
+        clases = db.session.query(Clase.id).filter(Clase.inicio + timedelta(minutes=20) < datetime.now(), Clase.estado==True).all()
+        clases = [clase[0] for clase in clases]
 
-#         data = db.session.query(Asistencia.id, Asistencia.clase_id, Asistencia.docente_id, Asistencia.estudiante_id, Asistencia.estado).filter(Asistencia.clase_id.in_(clases), Asistencia.estado==None).\
-#                         update({Asistencia.estado: 'Ausencia'}, synchronize_session=False)
+        db.session.query(Asistencia.id, Asistencia.clase_id, Asistencia.docente_id, Asistencia.estudiante_id, Asistencia.estado).filter(Asistencia.clase_id.in_(clases), Asistencia.estado==None).\
+                        update({Asistencia.estado: 'Ausencia'}, synchronize_session=False)
         
-#         db.session.commit()
-#         time.sleep(10)
+        db.session.query(Clase.estado).filter(Clase.inicio + timedelta(minutes=20) < datetime.now(), Clase.estado==False).update({Clase.estado: None}, synchronize_session=False)
+        
+        db.session.commit()
+        time.sleep(300)
 
-# Assistance_Thread = threading.Thread(target=check_asistencia)
-# Assistance_Thread.daemon = True
-# Assistance_Thread.start()
+Assistance_Thread = threading.Thread(target=check_asistencia)
+Assistance_Thread.daemon = True
+Assistance_Thread.start()
