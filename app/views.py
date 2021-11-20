@@ -77,27 +77,32 @@ class ClassesView(BaseView):
         "Profesor": current_app.appbuilder.sm.find_role("Profesor"),
         }
         
-        data = db.session.query(Asistencia.estudiante_id, Estudiante.nombre, Asistencia.estado).filter(Asistencia.clase_id==id).\
-                            join(Estudiante, Estudiante.id==Asistencia.estudiante_id).all()
-        
-        data_profesor = db.session.query(Asistencia.docente_id, Docente.nombre, Asistencia.id).filter(Asistencia.clase_id==id).\
-                            join(Docente, Docente.id==Asistencia.docente_id).all()
-                            
-        data = [[dato if dato != None else 'Sin registrar' for dato in row] for row in data]
-        
-        data = data_profesor + data
-                            
         clase = db.session.query(Clase.id, Clase.inicio, Clase.fin, Clase.salon_id).filter(Clase.id==id).one()
-
-        c = [clase[1].date(), clase[1].strftime('%A'), clase[1].time(), clase[2].time(), clase[3]]
+        clase = [clase[1].date(), clase[1].strftime('%A'), clase[1].time(), clase[2].time(), clase[3]]
         
         materia = db.session.query(Clase.id, Curso.asignatura_id, Asignatura.nombre).filter(Clase.id==id).\
             join(Curso, Curso.id==Clase.curso_id).\
             join(Asignatura, Asignatura.id==Curso.asignatura_id).one()
         
-        if g.user.roles[0] == roles['Estudiante']:
+        data = db.session.query(Asistencia.estudiante_id, Estudiante.nombre, Asistencia.estado, Asistencia.id).filter(Asistencia.clase_id==id).\
+                            join(Estudiante, Estudiante.id==Asistencia.estudiante_id).all()
+        
+        data_profesor = db.session.query(Asistencia.docente_id, Docente.nombre, Asistencia.id, Asistencia.estado).filter(Asistencia.clase_id==id).\
+                            join(Docente, Docente.id==Asistencia.docente_id).all()
+                            
+        if len(data_profesor)==0:
+            profe = db.session.query(Clase.id, Docente.nombre, Docente.id).filter(Clase.id==id).join(Curso, Curso.id==Clase.curso_id).join(Docente, Docente.id==Curso.docente_id).one()
+            if g.user.roles[0] == roles['Estudiante']:
+                return render_template('Clase.html', user=g.user, id=id, data=[], materia=materia, clase=clase,  class_code='Por generar', profesor=[profe[2], profe[1], 'Sin generar', 'Ausente', 'OrangeRed'])
             
-            if c[4] == 'VIRTUAL':
+            return render_template('ClaseProfesor.html', user=g.user, id=id, data=[], materia=materia, clase=clase, profesor=[profe[2], profe[1], 'Sin generar', 'Ausente', 'OrangeRed'])
+        
+        data_profesor = data_profesor[0] + ('DarkGreen',) #(21, 'Martinez Troncoso Carlos', '1F4LS2KPZZ8NVDE', 'Asistencia', 'DarkGreen')
+        data = [[dato if dato != None else 'Sin registrar' for dato in row] for row in data]
+        data = [estudiante + ['DarkGreen' if estudiante[2]=='Asistencia' else 'OrangeRed'] for estudiante in data] #[1, 'Gonzalez Benitez Sebastian', 'Ausencia', 'XD4KV0S2II3HOA3', 'black']
+
+        if g.user.roles[0] == roles['Estudiante']:
+            if clase[4] == 'VIRTUAL':
                 my_id = db.session.query(Estudiante.id).filter(Estudiante.email==g.user.email).one()[0]
                 code = db.session.query(Asistencia.id).filter(Asistencia.clase_id==id, Asistencia.estudiante_id==my_id).one_or_none()
                 if code == None:
@@ -107,24 +112,10 @@ class ClassesView(BaseView):
             else:
                 code = 'Dado por el profesor'
             
-            return render_template('Clase.html', user=g.user, id=id, data=data, materia=materia, clase=c,  class_code=code)
-        else:
-            
-            if c[4] != 'VIRTUAL':
-                data = db.session.query(Asistencia.estudiante_id, Estudiante.nombre, Asistencia.id).filter(Asistencia.clase_id==id).\
-                            join(Estudiante, Estudiante.id==Asistencia.estudiante_id).all()
-                
-                data_profesor = db.session.query(Asistencia.docente_id, Docente.nombre, Asistencia.id).filter(Asistencia.clase_id==3).\
-                            join(Docente, Docente.id==Asistencia.docente_id).all()
-
-                data = data_profesor + data
-            
-            s1='Al presionar este botón se generará toda la lista de clases para que los estudiantes puedan ingresar su asistencia'
-            s2='Iniciar la clase'
-            
-            
-            
-            return render_template('ClaseProfesor.html', user=g.user, button=s2, label=s1, id=id, data=data, materia=materia, clase=c)
+            return render_template('Clase.html', user=g.user, id=id, data=data, materia=materia, clase=clase,  class_code=code, profesor=data_profesor)
+        
+        
+        return render_template('ClaseProfesor.html', user=g.user, id=id, data=data, materia=materia, clase=clase, profesor=data_profesor)
     
     @has_access
     @expose('/iniciarclase/<id>')

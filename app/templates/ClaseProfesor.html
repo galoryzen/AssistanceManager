@@ -88,8 +88,8 @@
 	<div class="asistencia" id="asistencia">
 		<form action='/classesview/iniciarclase/{{id}}'>
 			<h3>Inicia la clase</h3>
-			<label for="codP">{{label}}</label>
-			<button class="button-5" role="button">{{button}}</button>
+			<label for="codP">Al presionar este botón se generará toda la lista de clases para que los estudiantes puedan ingresar su asistencia</label>
+			<button class="button-5" role="button">Iniciar la clase</button>
 		</form>
 	</div>
 
@@ -122,48 +122,28 @@
 				<tr>
 					<th class="column1"></th>
 					<td class="column2">Nombre</td>
-					<td class="column3">Código</td>
-					<td class="column4">Código Clase</td>
+					<td class="column3">Código Estudiante</td>
+					<td class="column3">Código Asistencia</td>
 					<td class="column5">Estado</td>
 				</tr>
 			</thead>
 			<tbody>
 				<tr class="rowTeacher">
-					<th class="column1"><img src="https://i.pravatar.cc/75?img=42.jpg" class="icon"></th>
-					<td class="column2">Matse Vane Lope</td>
-					<td class="column3">24859304</td>
-					<td class="column4">24154d238299Fkdkjd</td>
-					<td class="column5" style="color:rgb(67, 165, 42)">Presente</td>
+					<th class="column1"><img src="https://i.pravatar.cc/400?img={{ range(0,71) | random }}.jpg" class="icon"></th>
+					<td class="column2">{{profesor[1]}}</td>
+					<td class="column3">{{profesor[0]}}</td>
+					<td class="column4">{{profesor[2]}}</td>
+					<td class="column5" style="color:{{profesor[4]}}">{{profesor[3]}}</td>
 				</tr>
+				{% for estudiante in data %}
 				<tr>
-					<th class="column1"><img src="https://lastfm.freetls.fastly.net/i/u/avatar170s/c435b3552e62b643a9cbf1886c152cbf" class="icon"></th>
-					<td class="column2">Rau bUNny </td>
-					<td class="column3"> 92830238</td>
-					<td class="column4">C1d5fe55r4w5s1fg5d</td>
-					<td class="column5" style="color:brown">Ausente</td>
+					<th class="column1"><img src="https://i.pravatar.cc/400?img={{ range(0,71) | random }}.jpg" class="icon"></th>
+					<td class="column2">{{estudiante[1]}}</td>
+					<td class="column3">{{estudiante[0]}}</td>
+					<td class="column4">{{estudiante[3]}}</td>
+					<td class="column5" style="color:{{estudiante[4]}}">{{estudiante[2]}}</td>
 				</tr>
-				<tr>
-					<th class="column1"><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8rLT0qMS43Ojo6Iys9Pz8tOSg1ODIBCgoKDQwNGg8PGjclHyU3NzU3NzU3NTU1NTc3Nzc3NzU1NTU1KzU3Mys4NTU1LS0rLS01NTU1NTU1NTU1NS0tN//AABEIACgAKAMBIgACEQEDEQH/xAAcAAACAgIDAAAAAAAAAAAAAAAABwUGAQQCAwj/xAArEAACAQQABQIFBQAAAAAAAAABAgMABAURBhITITEHYRRRcYGRIjJBQvD/xAAXAQEBAQEAAAAAAAAAAAAAAAAEBQMC/8QAIBEAAgIBAwUAAAAAAAAAAAAAAQIAEQMEITESE0FRcf/aAAwDAQACEQMRAD8AeNIL1n47yEmffBYe+ktrS3XkuDESpkc+Rsd9Dx+afNxKILeWZhsRoWIHsN15t4e6OQyF5l8jGplu53l2w3ygtXDt0i5rix9bVKpjocx1FuLEXjOh2JE5tg+1M7g71Uy9nkbbHcQRS3SXEixBnULJH/G/H6qtGOtVeBJY2h6RHYr4qJ9QsbaPibXIW8ccs1pcoxKHfbfcUdM5LcReTSqq2DHDRXCCRZYY5E/a6hh9CKxS5Pmpniww93yNysYyASdapRcK4u3kxs9srusZlYc6HTa2dCnPcwR3VvJBMNxyLysPakvmbiThfinI4y0ICyMssLP4XmAo2oDVYjdIy3Rk/hrN54r2HmkjiEnIhb5DtWxJw7bxcPzWguWPOQDIyjfn5Cq9j4slExZb9Zp+r1WRlGvpre6sVlfNnb2zx0acpOpLhh3AA8j/AHzowO9COcULPEvmOBFjAp/qgH4rNdsUaxRrGg0qjQoqiOJFaiTUzJIkUbSSOqIo2zMdACkT6iqnEmQuMphZerGhCqwBHUAAB19xRRWebZZvphbH5IS0yV4IPho7eb4hkCHQPMaYHA5HC1ocjnWaMTEIxA30gfHN96KKyxqO4o9mIyMTjYnwI0Y5EljWSNgyMNhgexFFFFLIoycDYuf/2Q==" class="icon"></th>
-					<td class="column2">sebasTIAN Chamagol</td>
-					<td class="column3"> 10309328</td>
-					<td class="column4">sd1551w51f5sg</td>
-					<td class="column5" style="color:rgb(67, 165, 42)">Presente</td>
-				</tr>
-				<tr>
-					<th class="column1"><img src="https://i.pravatar.cc/75?img=43.jpg" class="icon"></th>
-					<td class="column2">German David Vargas</td>
-					<td class="column3">238298492</td>
-					<td class="column4">skjdnj2983982d</td>
-					<td class="column5" style="color:rgb(67, 165, 42)">Presente</td>
-				</tr>
-				<tr>
-					<th class="column1"><img src="https://i.pravatar.cc/75?img=11.jpg" class="icon"></th>
-					<td class="column2">Ilam Rojas</td>
-					<td class="column3">16562545</td>
-					<td class="column4">no existe</td>
-					<td class="column5" style="color:rgb(102, 95, 95)">No Matriculó</td>
-				</tr>
-				
+				{% endfor %}
 			</tbody>	
 		</table>
 	</div>

@@ -282,6 +282,9 @@ EMC = [
     EstudianteMatriculaCurso(curso_id=7248, periodo_id=2, estudiante_id=1),
     EstudianteMatriculaCurso(curso_id=7248, periodo_id=2, estudiante_id=2),
     EstudianteMatriculaCurso(curso_id=7248, periodo_id=2, estudiante_id=4),
+    EstudianteMatriculaCurso(curso_id=8057, periodo_id=2, estudiante_id=1),
+    EstudianteMatriculaCurso(curso_id=8057, periodo_id=2, estudiante_id=2),
+    EstudianteMatriculaCurso(curso_id=8057, periodo_id=2, estudiante_id=4),
 ]
 
 salones = [
