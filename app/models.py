@@ -3,7 +3,7 @@ from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, UniqueCons
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.expression import null
 from sqlalchemy.sql.schema import Sequence
-from sqlalchemy.sql.sqltypes import Date
+from sqlalchemy.sql.sqltypes import Boolean, Date
 
 """
 
@@ -91,7 +91,8 @@ class Clase(Model):
     inicio = Column(DateTime, nullable=False)
     fin = Column(DateTime, nullable=False)
     salon_id = Column(String(20), ForeignKey("salon.id"), nullable=False)
-    salon = relationship("Salon") 
+    salon = relationship("Salon")
+    estado = Column(Boolean, default=False)
 
     def __repr__(self):
         return self.curso + " - " + self.inicio + " - " + self.salon
