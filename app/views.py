@@ -15,6 +15,7 @@ import time
 import threading
 import random, string
 
+
 from . import appbuilder, db
 import app
 
@@ -28,7 +29,8 @@ class ClassesView(BaseView):
     @has_access
     @expose('/listaClases')
     def listaClases(self):
-        
+        dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo']
+        meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
         roles = {
         "Admin": current_app.appbuilder.sm.find_role(
             current_app.appbuilder.sm.auth_role_admin
@@ -39,14 +41,23 @@ class ClassesView(BaseView):
         
         if g.user.roles[0] == roles['Estudiante']:
             id = db.session.query(Estudiante.id).filter_by(email=g.user.email).one()[0]
-            data = db.session.query(EstudianteMatriculaCurso.curso_id, Periodo.nombre, Asignatura.nombre, Docente.nombre,Clase.inicio, Clase.fin, Clase.salon_id, Clase.id).filter_by(estudiante_id=id).\
+            data = db.session.query(EstudianteMatriculaCurso.curso_id, Periodo.nombre, Asignatura.nombre, Docente.nombre,Clase.inicio, Clase.fin, Clase.salon_id, Clase.id).filter(EstudianteMatriculaCurso.estudiante_id==id).\
                 join(Periodo, Periodo.id==EstudianteMatriculaCurso.periodo_id).\
                 join(Curso, EstudianteMatriculaCurso.curso_id==Curso.id).\
                 join(Asignatura, Curso.asignatura_id==Asignatura.id).\
                 join(Clase, Clase.curso_id==Curso.id).\
                 join(Docente, Docente.id==Curso.docente_id).all()
             db.session.close()
-            return render_template('ListaClases.html', user=g.user, data=data)
+            
+            clases = {}
+
+            for clase in data:
+                fecha = clase[4].date()
+                clases[fecha] = clases.get(fecha, []) + [clase]
+
+            fechas = sorted(clases.keys())
+            
+            return render_template('ListaClases.html', user=g.user, data=clases, fechas=fechas, dias=dias, meses=meses)
         if g.user.roles[0] == roles['Profesor']:
             id = db.session.query(Docente.id).filter_by(email=g.user.email).one()[0]
             data = db.session.query(Curso.id, Periodo.nombre, Asignatura.nombre, Docente.nombre, Clase.inicio, Clase.fin, Clase.salon_id, Clase.id).filter_by(docente_id=id).\
@@ -55,7 +66,15 @@ class ClassesView(BaseView):
                 join(Docente, Docente.id==Curso.docente_id).\
                 join(Clase, Clase.curso_id==Curso.id).all()
             db.session.close()
-            return render_template('ListaClases.html', user=g.user, data=data)
+            clases = {}
+
+            for clase in data:
+                fecha = clase[4].date()
+                clases[fecha] = clases.get(fecha, []) + [clase]
+
+            fechas = sorted(clases.keys())
+            
+            return render_template('ListaClases.html', user=g.user, data=clases, fechas=fechas, dias=dias, meses=meses)
         else:
             data = db.session.query(Curso.id, Periodo.nombre, Asignatura.nombre, Docente.nombre, Clase.inicio, Clase.fin, Clase.salon_id, Clase.id).\
                 join(Periodo, Periodo.id==Curso.periodo_id).\
@@ -63,12 +82,19 @@ class ClassesView(BaseView):
                 join(Docente, Docente.id==Curso.docente_id).\
                 join(Clase, Clase.curso_id==Curso.id).all()
             db.session.close()
-            return render_template('ListaClases.html', user=g.user, data=data)
+            clases = {}
+
+            for clase in data:
+                fecha = clase[4].date()
+                clases[fecha] = clases.get(fecha, []) + [clase]
+
+            fechas = sorted(clases.keys())
+            
+            return render_template('ListaClases.html', user=g.user, data=clases, fechas=fechas, dias=dias, meses=meses)
     
     @has_access
     @expose('/clase/<id>')
     def ClaseMethod(self, id):
-        
         roles = {
         "Admin": current_app.appbuilder.sm.find_role(
             current_app.appbuilder.sm.auth_role_admin

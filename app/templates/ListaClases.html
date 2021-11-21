@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,30 +25,25 @@
 
 </header>
 
-<!-- header section ends -->
-
-<!-- course section starts  -->
-
 <section class="course" id="course">
 
     <h1 class="heading">Clases</h1>    
-    
-    <div class="box-container">
-
-        {% for clase in data %}
-        <div class="box">
-            <div class="content">
-                <a href="clase/{{clase[7]}}" class="title">{{clase[2]}}</a>
-                <p><b>Inicio:</b> {{clase[4]}}<br><b>Fin:  </b>{{clase[5]}} <br><b>Salon: </b>{{clase[6]}}</p>
-                <div class="info">
-                    <h3>{{clase[3]}} - {{clase[1]}}</h3>
+    {% for fecha in fechas %}
+        <h1 class="heading">{{dias[fecha.weekday()]}}, {{fecha.day}} de {{meses[fecha.month-1]}}</h1>
+        <div class="box-container">
+        {% for clase in data.get(fecha) %}
+            <div class="box">
+                <div class="content">
+                    <a href="clase/{{clase[7]}}" class="title">{{clase[2]}}</a>
+                    <p><b>Inicio:</b> {{clase[4]}}<br><b>Fin:  </b>{{clase[5]}} <br><b>Salon: </b>{{clase[6]}}</p>
+                    <div class="info">
+                        <h3>{{clase[3]}} - {{clase[1]}}</h3>
+                    </div>
                 </div>
             </div>
-        </div>
         {% endfor %}
-    
-    </div>
-    
+        </div>
+    {% endfor %}
     </section>
 </body>
 </html>
