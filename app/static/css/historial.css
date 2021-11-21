@@ -1,0 +1,98 @@
+:root{
+    --gradient:linear-gradient(90deg, #D9230F, #A91B0C);
+}
+
+*{
+    font-family: 'Poppins', sans-serif;
+    margin:0; padding:0;
+    box-sizing: border-box;
+    border:none; outline: none;
+    text-decoration: none;
+    transition: all .2s linear;
+}
+
+*::selection{
+    background:#A91B0C;
+    color:#fff;
+}
+
+.home h1{
+    font-size: 6rem;
+    color:#666;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-family: 'Poppins';
+    height: 100vh;
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    font-size: 24px;
+    background-color: #f9fbff;
+}
+
+table{
+    border-collapse: collapse;
+    box-shadow: 0 5px 10px #e1e5ee;
+    background-color: white;
+    text-align: center;
+    overflow: hidden;
+}
+
+thead{
+    box-shadow: 0 5px 10px #e1e5ee;
+}
+
+th{
+    padding: 1rem 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    font: 0.7rem;
+    font-weight: 600;
+}
+
+td{
+    padding: 1rem 2rem;
+}
+
+.ausente{
+    border-radius: 0.2rem;
+    background-color: #ffcdd2;
+    padding: 0.2rem 1rem;
+    text-align: center;
+    color: #c62828;
+}
+
+.asistio{
+    border-radius: 0.2rem;
+    background-color: #c8e6c9;
+    padding: 0.2rem 1rem;
+    text-align: center;
+    color: #388e3c;
+}
+
+.nohuboclase{
+    border-radius: 0.2rem;
+    background-color: #fff0c2;
+    padding: 0.2rem 1rem;
+    text-align: center;
+    color: #a68b00;
+}
+
+tr:nth-child(even){
+    background-color: #f4f6fb;
+}
+
+.fas fa-arrow-circle-left, fa-user-circle, fa-sign-in-alt, fa-table{
+	color: #FCFCFC;
+}

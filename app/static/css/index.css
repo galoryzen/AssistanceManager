@@ -1,40 +1,53 @@
+body{
+    background-position-y: 70%!important;
+    background-image: url('https://files.lafm.com.co/assets/public/2021-09/feria_pop_de_la_universidad_del_norte2.jpg?1fsQ2s.GoiYETj36GOzgfzy8s45GgpfK');
+    -webkit-background-size:cover;
+    /* filter: blur(5px); */
+    background-size: cover;
+    background-position: center center;
+    height: 100vh;
+}
+.jumbotron{
+    width: 100%;
+    box-shadow: 2px 2px 2px 1px rgba(29, 28, 28, 0.2);
+    background-color: rgb(217 35 15 /0.8);
+    position: fixed;
+    margin: 0;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%) 
+}
 
- @media screen and (min-width: 768px){
-        
-    body  {
-        background-position-y: 70%!important;
-        background-image: url('https://www.uninorte.edu.co/documents/70220/16369313/2020-09-08+SOLICITUD+REGISTRO+FOTOGRAFICO%C2%A0EDIFICIO+CASA+DE+ESTUDIO+ALFREDO+CORREA%C2%A0%C2%A0+%288%29.jpg/5ac9409b-edf2-45d0-9ebd-b8097295d6f0?t=1613170719136');
-        background-size: 100%;
-        background-position: center;
-        background-repeat: no-repeat;
-        height: 100vh;
+.jumbotron h1{  
+    color: #FCFCFC;
+    font-family: 'Poppins', sans-serif;
+    font-size: 80px;
+    font-weight: 700;
+    text-align: center;
+}
 
-      }
-    .jumbotron{
-        width: 100%;
-        box-shadow: 2px 2px 2px 1px rgba(29, 28, 28, 0.2);
-        background-color: rgb(4 4 4 /0.8);
-    }
+.jumbotron h3{  
+    color: #FCFCFC;
+    font-family: 'Poppins', sans-serif;
+    font-size: 66px;
+    font-weight: 500;
+    text-align: center;
+}
 
-    .jumbotron h1{  
-        color: #FCFCFC;
-        font-family: 'Poppins', sans-serif;
-        font-size: 89px;
-        font-weight: 700;
-        text-align: center;
-    }
-
-    .jumbotron p{
-        color: #FCFCFC;
-        font-family: 'Poppins', sans-serif;
-        font-size: 30px;
-        text-align: center;
-        font-weight: 300;
-    }
-    a{
-        font-family: 'Poppins','sans-serif';
-        font-size: 20px;
-        font-weight: 400;
-        color: #FCFCFC;
-    }
+.jumbotron p{
+    color: #FCFCFC;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    text-align: center;
+    font-weight: 300;
+}
+a{
+    font-family: 'Poppins','sans-serif';
+    font-size: 20px;
+    font-weight: 400;
+    color: #FCFCFC;
+}
+hr{
+    display: none;
 }

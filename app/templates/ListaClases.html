@@ -5,8 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cursos</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/ac67e1c369.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
     <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}"></link>
 </head>
@@ -17,11 +19,10 @@
 
     <div id="menu" class="fas fa-bars"></div>
 
-    <a href="/logout/" class="logo"><i class="fas fa-user-graduate"></i>Cerrar Sesión</a>
+    <a href="/logout/" class="logo"><i class="fas fa-sign-in-alt"></i>Cerrar Sesión</a>
+    <a href="/classesview/historial" class="logo"><i class="fas fa-table"></i>Historial</a>
 
-    <div id="login" class="fas fa-user-circle">
-        <a>{{user}}</a>  
-    </div>
+    <a style="color: #fcfcfc; font-size: 25px"><i class="fas fa-user-circle"></i>{{user}}</a> 
 
 </header>
 

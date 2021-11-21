@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/ac67e1c369.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/historial.css')}}"></link>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}"></link>
+</head>
+<body>
+<!-- header section starts  -->
+
+<header>
+
+    <div id="menu" class="fas fa-bars"></div>
+
+    <a href="/" class="logo"><i class="fas fa-arrow-circle-left"></i>Volver</a>
+
+    <a style="color: #fcfcfc; font-size: 25px"><i class="fas fa-user-circle"></i>{{user}}</a> 
+
+</header>
+
+    <h1 class="heading">Historial de asistencias</h1>   
+    <table>
+        <thead>
+            <tr>
+                <th>Asignatura</th>
+                <th>Fecha</th>
+                <th>Hora de inicio</th>
+                <th>Hora de Asistencia</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Bases de datos</td>
+                <td>21/11/2021</td>
+                <td>18:30:00</td>
+                <td>18:32:15</td>
+                <td><p class="status asistio">Asistió</p></td>
+            </tr>
+            <tr>
+                <td>Bases de datos</td>
+                <td>21/11/2021</td>
+                <td>18:30:00</td>
+                <td>18:32:15</td>
+                <td><p class="status nohuboclase">No hubo clase</p></td>
+            </tr>
+            <tr>
+                <td>Bases de datos</td>
+                <td>21/11/2021</td>
+                <td>18:30:00</td>
+                <td>18:32:15</td>
+                <td><p class="status ausente">Ausente</p></td>
+            </tr>
+            <tr>
+                <td>Bases de datos</td>
+                <td>21/11/2021</td>
+                <td>18:30:00</td>
+                <td>18:32:15</td>
+                <td><p class="status asistio">Asistió</p></td>
+            </tr>
+            <tr>
+                <td>Bases de datos</td>
+                <td>21/11/2021</td>
+                <td>18:30:00</td>
+                <td>18:32:15</td>
+                <td><p class="status asistio">Asistió</p></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
