@@ -227,6 +227,12 @@ class ClassesView(BaseView):
             
         return redirect(f'http://localhost:5000/classesview/clase/{id}')
 
+    @has_access
+    @expose('/historial')
+    def historial(self):
+        return render_template('historial.html',user=g.user)
+
+
 class DepartamentoView(ModelView):
     datamodel = SQLAInterface(Departamento)
     add_columns=['id','nombre']

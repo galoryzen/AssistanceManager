@@ -5,11 +5,13 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Cursos</title>
-	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/ac67e1c369.js" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 	<link rel="stylesheet" href="{{url_for('static',filename='css/claseProfesor.css')}}">
-	<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+	<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}"></link>
 </head>
 
 <body>
@@ -21,14 +23,12 @@
 		<nav class="navbar">
 
 			<ul>
-				<li><a href="/">Inicio</a></li>
-				<li><a href="#asistencia">Ingresar</a></li>
+				<li><a href="/"><i class="fas fa-arrow-circle-left"></i>Volver</a></li>
+				<li><a href="#asistencia"><i class="fas fa-user-check"></i>Iniciar clase</a></li>
 			</ul>
 		</nav>
 
-		<div id="login" class="fas fa-address-card">
-			<a style="color: black">{{user}}</a>
-		</div>
+		<a style="color: #fcfcfc; font-size: 25px"><i class="fas fa-chalkboard-teacher"></i>{{user}}</a>		
 
 	</header>
 

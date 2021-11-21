@@ -10,6 +10,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/ac67e1c369.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <link rel="stylesheet" href="{{url_for('static',filename='/app/static/css/historial.css')}}"></link>
     <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}"></link>
 </head>
 <body>
@@ -19,32 +20,13 @@
 
     <div id="menu" class="fas fa-bars"></div>
 
-    <a href="/logout/" class="logo"><i class="fas fa-sign-in-alt"></i>Cerrar Sesión</a>
-    <a href="/classesview/historial" class="logo"><i class="fas fa-table"></i>Historial</a>
+    <a href="/" class="logo"><i class="fas fa-arrow-circle-left"></i>Volver</a>
 
     <a style="color: #fcfcfc; font-size: 25px"><i class="fas fa-user-circle"></i>{{user}}</a> 
 
 </header>
 
-<section class="course" id="course">
+    <h1 class="heading">Historial</h1>   
 
-    <h1 class="heading">Clases</h1>    
-    {% for fecha in fechas %}
-        <h1 class="heading">{{dias[fecha.weekday()]}}, {{fecha.day}} de {{meses[fecha.month-1]}}</h1>
-        <div class="box-container">
-        {% for clase in data.get(fecha) %}
-            <div class="box">
-                <div class="content">
-                    <a href="clase/{{clase[7]}}" class="title">{{clase[2]}}</a>
-                    <p><b>Inicio:</b> {{clase[4]}}<br><b>Fin:  </b>{{clase[5]}} <br><b>Salon: </b>{{clase[6]}}</p>
-                    <div class="info">
-                        <h3>{{clase[3]}} - {{clase[1]}}</h3>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-        </div>
-    {% endfor %}
-    </section>
 </body>
 </html>

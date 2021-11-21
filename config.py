@@ -85,12 +85,14 @@ FAB_ROLES = {
         [".*", 'menu_access'],
         [".*", 'can_Clase'],
         [".*", 'can_Registrarse'],
+        [".*", 'can_historial'],
     ],
     "Profesor": [
         [".*", 'can_listaClases'],
         [".*", 'menu_access'],
         [".*", 'can_Clase'],
         [".*", 'can_IniciarClase'],
+        [".*", 'can_historial'],
     ]
 }
 
