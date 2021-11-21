@@ -279,14 +279,12 @@ estudiantes = [
 ]
 
 EMC = [
-    EstudianteMatriculaCurso(curso_id=8087, periodo_id=1, estudiante_id=1),
-    EstudianteMatriculaCurso(curso_id=8081, periodo_id=1, estudiante_id=1),
-    EstudianteMatriculaCurso(curso_id=8050, periodo_id=1, estudiante_id=1),
-    EstudianteMatriculaCurso(curso_id=8087, periodo_id=1, estudiante_id=2),
-    EstudianteMatriculaCurso(curso_id=8081, periodo_id=1, estudiante_id=2),
-    EstudianteMatriculaCurso(curso_id=8050, periodo_id=1, estudiante_id=2),
-    EstudianteMatriculaCurso(curso_id=8082, periodo_id=1, estudiante_id=3),
-    EstudianteMatriculaCurso(curso_id=8050, periodo_id=1, estudiante_id=3),
+    EstudianteMatriculaCurso(curso_id=7248, periodo_id=2, estudiante_id=1),
+    EstudianteMatriculaCurso(curso_id=7248, periodo_id=2, estudiante_id=2),
+    EstudianteMatriculaCurso(curso_id=7248, periodo_id=2, estudiante_id=4),
+    EstudianteMatriculaCurso(curso_id=8057, periodo_id=2, estudiante_id=1),
+    EstudianteMatriculaCurso(curso_id=8057, periodo_id=2, estudiante_id=2),
+    EstudianteMatriculaCurso(curso_id=8057, periodo_id=2, estudiante_id=4),
 ]
 
 salones = [
@@ -299,14 +297,10 @@ salones = [
 ]
 
 clases = [
-    # Clases de Redes
-    Clase(curso_id=8087, inicio=datetime.now() + timedelta(minutes=5), fin=datetime.now() + timedelta(minutes=125), salon_id='VIRTUAL'), # De prueba a los 5 min de ejecutar el script
-    Clase(curso_id=8087, inicio=datetime(2021, 11, 18, 9, 30, 0, 0), fin=datetime(2021, 11, 18, 11, 30, 0, 0), salon_id='VIRTUAL'), # Jueves 9:30 - 11:30 Redes
-    Clase(curso_id=8087, inicio=datetime(2021, 11, 19, 9, 30, 0, 0), fin=datetime(2021, 11, 18, 10, 30, 0, 0), salon_id='VIRTUAL'), # Viernes 9:30 - 10:30 Redes
-    Clase(curso_id=8050, inicio=datetime(2021, 11, 15, 12, 30, 0, 0), fin=datetime(2021, 11, 15, 14, 30, 0, 0), salon_id='31K'), #Lunes 12:30 - 2:30 Estructuras
-    Clase(curso_id=8050, inicio=datetime(2021, 11, 17, 9, 30, 0, 0), fin=datetime(2021, 11, 17, 10, 30, 0, 0), salon_id='31K'), #Miercoles 9:30 - 10:30 Estructuras
-    Clase(curso_id=8082, inicio=datetime(2021, 11, 16, 10, 30, 0, 0), fin=datetime(2021, 11, 16, 12, 30, 0, 0), salon_id='31G2'), 
-    Clase(curso_id=8082, inicio=datetime(2021, 11, 17, 15, 30, 0, 0), fin=datetime(2021, 11, 17, 17, 30, 0, 0), salon_id='31G2'),
+    Clase(curso_id=7248, inicio=datetime.now() + timedelta(minutes=1), fin=datetime.now() + timedelta(minutes=120), salon_id='31K'),
+    Clase(curso_id=7248, inicio=datetime(2021, 11, 19, 12, 30, 0, 0), fin=datetime(2021, 11, 19, 13, 30, 0, 0), salon_id='31G2'),
+    Clase(curso_id=8057, inicio=datetime.now() + timedelta(minutes=1), fin=datetime.now() + timedelta(minutes=120), salon_id='VIRTUAL'),
+    Clase(curso_id=8057, inicio=datetime(2021, 11, 19, 12, 30, 0, 0), fin=datetime(2021, 11, 19, 13, 30, 0, 0), salon_id='VIRTUAL'),
 ]
 
 try:

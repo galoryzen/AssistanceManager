@@ -8,7 +8,7 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-	<link rel="stylesheet" href="{{url_for('static',filename='css/clase.css')}}">
+	<link rel="stylesheet" href="{{url_for('static',filename='css/claseProfesor.css')}}">
 	<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
 </head>
 
@@ -77,8 +77,6 @@
 					sc.style.transform = `rotateZ(${ss}deg)`;
 				})
 
-
-
 			</script>
 		</div>
 	</div>
@@ -90,17 +88,17 @@
 	<div class="asistencia" id="asistencia">
 		<form action='/classesview/iniciarclase/{{id}}'>
 			<h3>Inicia la clase</h3>
-			<label for="codP">{{label}}</label>
-			<button class="button-5" role="button">{{button}}</button>
+			<label for="codP">Al presionar este botón se generará toda la lista de clases para que los estudiantes puedan ingresar su asistencia</label>
+			<button class="button-5" role="button">Iniciar la clase</button>
 		</form>
 	</div>
 
 
 	<div class="services" id="lista">
-		<h1 class="title">Estudiantes</h1>
+		<h1 class="title">Lista de Asistencia</h1>
 	</div>
 
-	<div class='tableContainer'>
+	<!-- <div class='tableContainer'>
 		<table class="table">
 			<thead>
 				<tr class='head'>
@@ -115,6 +113,38 @@
 				</tr>
 			{% endfor %}
 			</tbody>
+		</table>
+	</div> -->
+
+	<div class="listContainer">
+		<table>
+			<thead class="row">
+				<tr>
+					<th class="column1"></th>
+					<td class="column2">Nombre</td>
+					<td class="column3">Código Estudiante</td>
+					<td class="column3">Código Asistencia</td>
+					<td class="column5">Estado</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="rowTeacher">
+					<th class="column1"><img src="https://i.pravatar.cc/400?img={{ range(0,71) | random }}.jpg" class="icon"></th>
+					<td class="column2">{{profesor[1]}}</td>
+					<td class="column3">{{profesor[0]}}</td>
+					<td class="column4">{{profesor[2]}}</td>
+					<td class="column5" style="color:{{profesor[4]}}">{{profesor[3]}}</td>
+				</tr>
+				{% for estudiante in data %}
+				<tr>
+					<th class="column1"><img src="https://i.pravatar.cc/400?img={{ range(0,71) | random }}.jpg" class="icon"></th>
+					<td class="column2">{{estudiante[1]}}</td>
+					<td class="column3">{{estudiante[0]}}</td>
+					<td class="column4">{{estudiante[3]}}</td>
+					<td class="column5" style="color:{{estudiante[4]}}">{{estudiante[2]}}</td>
+				</tr>
+				{% endfor %}
+			</tbody>	
 		</table>
 	</div>
 </div>

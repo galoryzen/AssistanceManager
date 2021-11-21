@@ -94,10 +94,10 @@
 			<h3>Registra tu asistencia</h3>
 
 			<label for="codC">Código de Clase</label>
-			<input type="text" placeholder="Ej: 0PPERG1IJXV0CNG" id="codC" name="codC">
+			<input type="text" placeholder="Ej: 0PPERG1IJXV0CNG" id="codC" name="codC" autocomplete="off">
 
 			<label for="codP">Código de Profesor</label>
-			<input type="text" placeholder="Ej: Y89E2S4AE42MVB8" id="codP" name="codP">
+			<input type="text" placeholder="Ej: Y89E2S4AE42MVB8" id="codP" name="codP" autocomplete="off">
 
 
 			<button class="button-5" role="button">Registrarse</button>
@@ -107,10 +107,10 @@
 
 
 	<div class="services" id="lista">
-		<h1 class="title">Estudiantes</h1>
+		<h1 class="title">Lista de Asistentes</h1>
 	</div>
 
-	<div class='tableContainer'>
+	<!-- <div class='tableContainer'>
 		<table class="table">
 			<thead>
 				<tr class='head'>
@@ -125,6 +125,38 @@
 				</tr>
 			{% endfor %}
 			</tbody>
+		</table>
+	</div> -->
+
+	<div class="listContainer">
+		<table>
+			<thead class="row">
+				<tr>
+					<th class="column1"></th>
+					<td class="column2">Nombre</td>
+					<td class="column3">Código Estudiante</td>
+					<td class="column4">Estado</td>
+					<td class="column5">Codigo Profesor</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="rowTeacher">
+					<th class="column1"><img src="https://i.pravatar.cc/400?img={{ range(0,71) | random }}.jpg" class="icon"></th>
+					<td class="column2">{{profesor[1]}}</td>
+					<td class="column3">{{profesor[0]}}</td>
+					<td class="column4" style="color:{{profesor[4]}}">{{profesor[3]}}</td>
+					<td class="column5">{{profesor[2]}}</td>
+				</tr>
+				{% for estudiante in data %}
+				<tr>
+					<th class="column1"><img src="https://i.pravatar.cc/400?img={{ range(0,71) | random }}.jpg" class="icon"></th>
+					<td class="column2">{{estudiante[1]}}</td>
+					<td class="column3">{{estudiante[0]}}</td>
+					<td class="column4" style="color:{{estudiante[4]}}">{{estudiante[2]}}</td>
+					<td></td>
+				</tr>
+				{% endfor %}
+			</tbody>	
 		</table>
 	</div>
 </div>

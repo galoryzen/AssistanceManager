@@ -396,9 +396,9 @@ thead:hover{
 }*/
 
 .listContainer{
-	width: 1200px;
+	width: 1300px;
 	height: 26px;
-	margin-left: 15%;
+	margin-left: 13%;
 	display: table;
     font-family: 'Open Sans', sans-serif;
     border-radius: 15px;
@@ -430,7 +430,7 @@ thead td, th{
 
 tr {
 	transition: all .2s ease-in;
-	font-size: 17px;
+	font-size: 14px;
 }
 
 .row{
@@ -453,8 +453,11 @@ tr {
 	padding-left: 70px;
 }
 .column4{
-	padding-left: 220px;
-	padding-right: 45px;
+	padding-left: 60px;
+}
+.column5{
+	padding-left: 180px;
+	padding-right: 55px;
 }
 
 th, td{
