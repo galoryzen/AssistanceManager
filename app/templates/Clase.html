@@ -23,7 +23,7 @@
 		<nav class="navbar">
 
 			<ul>
-				<li><a href="/"><i class="fas fa-arrow-circle-left"></i>Volver</a></li>
+				<li><a href="/classesview/listaClases"><i class="fas fa-arrow-circle-left"></i>Volver</a></li>
 				<li><a href="#asistencia"><i class="fas fa-user-check"></i>Registrarse</a></li>
 			</ul>
 		</nav>
@@ -110,31 +110,13 @@
 		<h1 class="title">Lista de Asistentes</h1>
 	</div>
 
-	<!-- <div class='tableContainer'>
-		<table class="table">
-			<thead>
-				<tr class='head'>
-					<th>{{materia[2]}} {{clase[0]}}</th>
-				</tr>
-			</thead>
-
-			<tbody>
-			{% for estudiante in data %}
-				<tr>
-					<td>{{estudiante[0]}} - {{estudiante[1]}} - {{estudiante[2]}}</td>
-				</tr>
-			{% endfor %}
-			</tbody>
-		</table>
-	</div> -->
-
 	<div class="listContainer">
 		<table>
 			<thead class="row">
 				<tr>
 					<th class="column1"></th>
 					<td class="column2">Nombre</td>
-					<td class="column3">Código Estudiante</td>
+					<td class="column3">Código Institucional</td>
 					<td class="column4">Estado</td>
 					<td class="column5">Codigo Profesor</td>
 				</tr>

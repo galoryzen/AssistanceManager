@@ -5,7 +5,7 @@ import logging
 
 from sqlalchemy.sql.sqltypes import DateTime
 from app import db
-from app.models import Asignatura, Clase, Curso, Departamento, Docente, Estudiante, EstudianteMatriculaCurso, Periodo, PlanAsignatura, PlanEstudio, ProgramaAcademico, Salon
+from app.models import Asignatura, Clase, Curso, Departamento, Docente, Estudiante, EstudianteMatriculaCurso, Periodo, PlanAsignatura, PlanEstudio, ProgramaAcademico, Salon, Asistencia
 log = logging.getLogger(__name__)
 
 try:
@@ -285,6 +285,7 @@ EMC = [
     EstudianteMatriculaCurso(curso_id=8057, periodo_id=2, estudiante_id=1),
     EstudianteMatriculaCurso(curso_id=8057, periodo_id=2, estudiante_id=2),
     EstudianteMatriculaCurso(curso_id=8057, periodo_id=2, estudiante_id=4),
+    EstudianteMatriculaCurso(curso_id=8081, periodo_id=2, estudiante_id=4),
 ]
 
 salones = [
@@ -301,6 +302,43 @@ clases = [
     Clase(curso_id=7248, inicio=datetime(2021, 11, 19, 12, 30, 0, 0), fin=datetime(2021, 11, 19, 13, 30, 0, 0), salon_id='31G2'),
     Clase(curso_id=8057, inicio=datetime.now() + timedelta(minutes=1), fin=datetime.now() + timedelta(minutes=120), salon_id='VIRTUAL'),
     Clase(curso_id=8057, inicio=datetime(2021, 11, 19, 12, 30, 0, 0), fin=datetime(2021, 11, 19, 13, 30, 0, 0), salon_id='VIRTUAL'),
+    # Estructuras Discretas
+    Clase(curso_id=8057, inicio=datetime(2021, 11, 9, 10, 30, 0, 0), fin=datetime(2021, 11, 16, 9, 30, 0, 0), salon_id='VIRTUAL', estado=True),
+    Clase(curso_id=8057, inicio=datetime(2021, 11, 11, 10, 30, 0, 0), fin=datetime(2021, 11, 11, 12, 30, 0, 0), salon_id='VIRTUAL', estado=True),
+    
+    Clase(curso_id=8057, inicio=datetime(2021, 11, 16, 10, 30, 0, 0), fin=datetime(2021, 11, 16, 11, 30, 0, 0), salon_id='VIRTUAL', estado=True),
+    Clase(curso_id=8057, inicio=datetime(2021, 11, 18, 10, 30, 0, 0), fin=datetime(2021, 11, 16, 12, 30, 0, 0), salon_id='VIRTUAL', estado=True),
+    
+    #Bases de datos
+    Clase(curso_id=8081, inicio=datetime(2021, 11, 9, 18, 30, 0, 0), fin=datetime(2021, 11, 16, 20, 30, 0, 0), salon_id='31G2', estado=True),
+    Clase(curso_id=8081, inicio=datetime(2021, 11, 11, 18, 30, 0, 0), fin=datetime(2021, 11, 11, 20, 30, 0, 0), salon_id='31K', estado=True),
+    
+    Clase(curso_id=8081, inicio=datetime(2021, 11, 16, 18, 30, 0, 0), fin=datetime(2021, 11, 16, 20, 30, 0, 0), salon_id='31G2', estado=True),
+    Clase(curso_id=8081, inicio=datetime(2021, 11, 18, 18, 30, 0, 0), fin=datetime(2021, 11, 16, 20, 30, 0, 0), salon_id='31K', estado=True),
+]
+
+asistencias = [
+    #Estructuras Discretas
+    Asistencia(id='test1', clase_id=5, docente_id=19, hora_asistencia=datetime(2021, 11, 9, 10, 31, 0, 0), estado='Asistencia', curso_id=8057),
+    Asistencia(id='test2', clase_id=6, docente_id=19, hora_asistencia=datetime(2021, 11, 11, 10, 31, 0, 0), estado='Asistencia', curso_id=8057),
+    Asistencia(id='test3', clase_id=7, docente_id=19, hora_asistencia=datetime(2021, 11, 16, 10, 31, 0, 0), estado='Asistencia', curso_id=8057),
+    Asistencia(id='test4', clase_id=8, docente_id=19, hora_asistencia=datetime(2021, 11, 18, 10, 31, 0, 0), estado='Asistencia', curso_id=8057),
+    
+    Asistencia(id='test5', clase_id=5, estudiante_id=4, hora_asistencia=datetime(2021, 11, 9, 10, 31, 30, 0), estado='Asistencia', curso_id=8057),
+    Asistencia(id='test6', clase_id=6, estudiante_id=4, hora_asistencia=datetime(2021, 11, 11, 10, 32, 0, 0), estado='Asistencia', curso_id=8057),
+    Asistencia(id='test7', clase_id=7, estudiante_id=4, hora_asistencia=datetime(2021, 11, 16, 10, 33, 0, 0), estado='Asistencia', curso_id=8057),
+    Asistencia(id='test8', clase_id=8, estudiante_id=4, hora_asistencia=datetime(2021, 11, 18, 10, 34, 0, 0), estado='Asistencia', curso_id=8057),
+    
+    #Bases de datos
+    Asistencia(id='test9', clase_id=9, docente_id=18, hora_asistencia=datetime(2021, 11, 9, 18, 31, 0, 0), estado='Asistencia', curso_id=8081),
+    Asistencia(id='test10', clase_id=10, docente_id=18, hora_asistencia=datetime(2021, 11, 11, 18, 31, 0, 0), estado='Asistencia', curso_id=8081),
+    Asistencia(id='test11', clase_id=11, docente_id=18, hora_asistencia=datetime(2021, 11, 16, 18, 31, 0, 0), estado='Asistencia', curso_id=8081),
+    Asistencia(id='test12', clase_id=12, docente_id=18, hora_asistencia=datetime(2021, 11, 18, 18, 31, 0, 0), estado='Asistencia', curso_id=8081),
+    
+    Asistencia(id='test13', clase_id=9, estudiante_id=4, hora_asistencia=datetime(2021, 11, 9, 18, 31, 30, 0), estado='Asistencia', curso_id=8081),
+    Asistencia(id='test14', clase_id=10, estudiante_id=4, hora_asistencia=datetime(2021, 11, 11, 18, 32, 0, 0), estado='Asistencia', curso_id=8081),
+    Asistencia(id='test15', clase_id=11, estudiante_id=4, hora_asistencia=datetime(2021, 11, 16, 18, 33, 0, 0), estado='Asistencia', curso_id=8081),
+    Asistencia(id='test16', clase_id=12, estudiante_id=4, hora_asistencia=None, estado='Ausencia', curso_id=8081),
 ]
 
 try:
@@ -316,6 +354,7 @@ try:
     [db.session.add_all(estudiantes)]
     [db.session.add_all(EMC)]
     [db.session.add_all(clases)]
+    [db.session.add_all(asistencias)]
     db.session.commit()
 except Exception as e:
     print(e)

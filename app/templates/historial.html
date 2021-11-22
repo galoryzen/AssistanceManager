@@ -19,18 +19,17 @@
 <header>
 
     <div id="menu" class="fas fa-bars"></div>
-
-    <a href="/" class="logo"><i class="fas fa-arrow-circle-left"></i>Volver</a>
-
-    <a style="color: #fcfcfc; font-size: 25px"><i class="fas fa-user-circle"></i>{{user}}</a> 
+    <a href="/logout/" class="logo"><i class="fas fa-sign-in-alt"></i>Cerrar Sesión</a>
+    <a href="/" class="logo"><i class="fas fa-arrow-circle-left"></i>Inicio</a>
+    <a href="/classesview/historial" class="logo"><i class="fas fa-table"></i>Historial</a>
+    <a style="color: #fcfcfc; font-size: 25px"><i class="fas fa-user-circle"></i>{{user}}</a>
 
 </header>
-
-    <h1 class="heading">Historial de asistencias</h1>   
+    {% for asignatura, asistencia in data.items() %}
+    <h1 class="heading">{{asignatura}}</h1>   
     <table>
         <thead>
             <tr>
-                <th>Asignatura</th>
                 <th>Fecha</th>
                 <th>Hora de inicio</th>
                 <th>Hora de Asistencia</th>
@@ -38,42 +37,24 @@
             </tr>
         </thead>
         <tbody>
+            {%for clase in asistencia%}
             <tr>
-                <td>Bases de datos</td>
-                <td>21/11/2021</td>
-                <td>18:30:00</td>
-                <td>18:32:15</td>
-                <td><p class="status asistio">Asistió</p></td>
+                <td>{{clase[2].date()}}</td>
+                <td>{{clase[2].time()}}</td>
+                {% if clase[0]!=None %}
+                <td>{{clase[0].time()}}</td>
+                {% else %}
+                <td>-</td>
+                {% endif %}
+                {% if clase[1]=='Asistencia' %}
+                <td><p class="status asistio">{{clase[1]}}</p></td>
+                {% else %}
+                <td><p class="status ausente">{{clase[1]}}</p></td>
+                {% endif %}
             </tr>
-            <tr>
-                <td>Bases de datos</td>
-                <td>21/11/2021</td>
-                <td>18:30:00</td>
-                <td>18:32:15</td>
-                <td><p class="status nohuboclase">No hubo clase</p></td>
-            </tr>
-            <tr>
-                <td>Bases de datos</td>
-                <td>21/11/2021</td>
-                <td>18:30:00</td>
-                <td>18:32:15</td>
-                <td><p class="status ausente">Ausente</p></td>
-            </tr>
-            <tr>
-                <td>Bases de datos</td>
-                <td>21/11/2021</td>
-                <td>18:30:00</td>
-                <td>18:32:15</td>
-                <td><p class="status asistio">Asistió</p></td>
-            </tr>
-            <tr>
-                <td>Bases de datos</td>
-                <td>21/11/2021</td>
-                <td>18:30:00</td>
-                <td>18:32:15</td>
-                <td><p class="status asistio">Asistió</p></td>
-            </tr>
+            {%endfor%}
         </tbody>
     </table>
+    {%endfor%}
 </body>
 </html>
