@@ -39,9 +39,12 @@ class ClassesView(BaseView):
         "Profesor": current_app.appbuilder.sm.find_role("Profesor"),
         }
         
+        now = datetime.now()
+        today = datetime(year=now.year, month=now.month, day=now.day, hour=0, minute=0, second=0)
+        
         if g.user.roles[0] == roles['Estudiante']:
             id = db.session.query(Estudiante.id).filter_by(email=g.user.email).one()[0]
-            data = db.session.query(EstudianteMatriculaCurso.curso_id, Periodo.nombre, Asignatura.nombre, Docente.nombre,Clase.inicio, Clase.fin, Clase.salon_id, Clase.id).filter(EstudianteMatriculaCurso.estudiante_id==id).\
+            data = db.session.query(EstudianteMatriculaCurso.curso_id, Periodo.nombre, Asignatura.nombre, Docente.nombre,Clase.inicio, Clase.fin, Clase.salon_id, Clase.id).filter(EstudianteMatriculaCurso.estudiante_id==id, Clase.inicio>today).\
                 join(Periodo, Periodo.id==EstudianteMatriculaCurso.periodo_id).\
                 join(Curso, EstudianteMatriculaCurso.curso_id==Curso.id).\
                 join(Asignatura, Curso.asignatura_id==Asignatura.id).\
@@ -60,7 +63,7 @@ class ClassesView(BaseView):
             return render_template('ListaClases.html', user=g.user, data=clases, fechas=fechas, dias=dias, meses=meses)
         if g.user.roles[0] == roles['Profesor']:
             id = db.session.query(Docente.id).filter_by(email=g.user.email).one()[0]
-            data = db.session.query(Curso.id, Periodo.nombre, Asignatura.nombre, Docente.nombre, Clase.inicio, Clase.fin, Clase.salon_id, Clase.id).filter_by(docente_id=id).\
+            data = db.session.query(Curso.id, Periodo.nombre, Asignatura.nombre, Docente.nombre, Clase.inicio, Clase.fin, Clase.salon_id, Clase.id).filter(Docente.id==id, Clase.inicio>today).\
                 join(Periodo, Periodo.id==Curso.periodo_id).\
                 join(Asignatura, Asignatura.id==Curso.asignatura_id).\
                 join(Docente, Docente.id==Curso.docente_id).\
@@ -76,7 +79,8 @@ class ClassesView(BaseView):
             
             return render_template('ListaClases.html', user=g.user, data=clases, fechas=fechas, dias=dias, meses=meses)
         else:
-            data = db.session.query(Curso.id, Periodo.nombre, Asignatura.nombre, Docente.nombre, Clase.inicio, Clase.fin, Clase.salon_id, Clase.id).\
+            
+            data = db.session.query(Curso.id, Periodo.nombre, Asignatura.nombre, Docente.nombre, Clase.inicio, Clase.fin, Clase.salon_id, Clase.id).filter(Clase.inicio > today).\
                 join(Periodo, Periodo.id==Curso.periodo_id).\
                 join(Asignatura, Asignatura.id==Curso.asignatura_id).\
                 join(Docente, Docente.id==Curso.docente_id).\
@@ -230,7 +234,73 @@ class ClassesView(BaseView):
     @has_access
     @expose('/historial')
     def historial(self):
-        return render_template('historial.html',user=g.user)
+        
+        dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo']
+        meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
+        
+        now = datetime.now()
+        today = datetime(year=now.year, month=now.month, day=now.day, hour=0, minute=0, second=0)
+        
+        roles = {
+        "Admin": current_app.appbuilder.sm.find_role(
+            current_app.appbuilder.sm.auth_role_admin
+        ),
+        "Estudiante": current_app.appbuilder.sm.find_role("Estudiante"),
+        "Profesor": current_app.appbuilder.sm.find_role("Profesor"),
+        }
+        
+        if g.user.roles[0] == roles['Profesor']:
+            id = db.session.query(Docente.id).filter_by(email=g.user.email).one()[0]
+            data = db.session.query(Curso.id, Periodo.nombre, Asignatura.nombre, Docente.nombre, Clase.inicio, Clase.fin, Clase.salon_id, Clase.id).filter(Docente.id==id, Clase.inicio <= today).\
+                join(Periodo, Periodo.id==Curso.periodo_id).\
+                join(Asignatura, Asignatura.id==Curso.asignatura_id).\
+                join(Docente, Docente.id==Curso.docente_id).\
+                join(Clase, Clase.curso_id==Curso.id).all()
+            db.session.close()
+            clases = {}
+
+            for clase in data:
+                fecha = clase[4].date()
+                clases[fecha] = clases.get(fecha, []) + [clase]
+
+            fechas = sorted(clases.keys())
+            
+            return render_template('ListaClases.html', user=g.user, data=clases, fechas=fechas, dias=dias, meses=meses)
+        
+        elif g.user.roles[0] == roles['Estudiante']:
+            id = db.session.query(Estudiante.id).filter_by(email=g.user.email).one()[0]
+            materias = db.session.query(EstudianteMatriculaCurso.curso_id, Asignatura.nombre).filter(EstudianteMatriculaCurso.estudiante_id==id).\
+                        join(Curso, Curso.id==EstudianteMatriculaCurso.curso_id).\
+                        join(Asignatura, Curso.asignatura_id==Asignatura.id).all()
+            
+            data = {}
+            
+            for materia in materias:
+                asistencias = db.session.query(Asistencia.hora_asistencia, Asistencia.estado, Clase.inicio).filter(Asistencia.estudiante_id==id, Asistencia.curso_id==materia[0]).\
+                            join(Clase, Clase.id==Asistencia.clase_id).all()
+                if len(asistencias)==0:
+                    continue
+                data[materia[1]] = asistencias
+                
+            return render_template('historial.html',user=g.user, data=data)
+        
+        else:
+            today = datetime.now()
+            data = db.session.query(Curso.id, Periodo.nombre, Asignatura.nombre, Docente.nombre, Clase.inicio, Clase.fin, Clase.salon_id, Clase.id).filter(Clase.inicio < today).\
+                join(Periodo, Periodo.id==Curso.periodo_id).\
+                join(Asignatura, Asignatura.id==Curso.asignatura_id).\
+                join(Docente, Docente.id==Curso.docente_id).\
+                join(Clase, Clase.curso_id==Curso.id).all()
+            db.session.close()
+            clases = {}
+
+            for clase in data:
+                fecha = clase[4].date()
+                clases[fecha] = clases.get(fecha, []) + [clase]
+
+            fechas = sorted(clases.keys())
+            
+            return render_template('ListaClases.html', user=g.user, data=clases, fechas=fechas, dias=dias, meses=meses)
 
 
 class DepartamentoView(ModelView):
@@ -377,22 +447,22 @@ def getEstadoAsistencia(inicio: datetime, current: datetime):
     else:
         return 'Ausencia'
     
-def check_asistencia():
+# def check_asistencia():
     
-    while True:
+#     while True:
         
-        print('Actualicé')
-        clases = db.session.query(Clase.id).filter(Clase.inicio + timedelta(minutes=20) < datetime.now(), Clase.estado==True).all()
-        clases = [clase[0] for clase in clases]
+#         print('Actualicé')
+#         clases = db.session.query(Clase.id).filter(Clase.inicio + timedelta(minutes=20) < datetime.now(), Clase.estado==True).all()
+#         clases = [clase[0] for clase in clases]
 
-        db.session.query(Asistencia.id, Asistencia.clase_id, Asistencia.docente_id, Asistencia.estudiante_id, Asistencia.estado).filter(Asistencia.clase_id.in_(clases), Asistencia.estado==None).\
-                        update({Asistencia.estado: 'Ausencia'}, synchronize_session=False)
+#         db.session.query(Asistencia.id, Asistencia.clase_id, Asistencia.docente_id, Asistencia.estudiante_id, Asistencia.estado).filter(Asistencia.clase_id.in_(clases), Asistencia.estado==None).\
+#                         update({Asistencia.estado: 'Ausencia'}, synchronize_session=False)
         
-        db.session.query(Clase.estado).filter(Clase.inicio + timedelta(minutes=20) < datetime.now(), Clase.estado==False).update({Clase.estado: None}, synchronize_session=False)
+#         db.session.query(Clase.estado).filter(Clase.inicio + timedelta(minutes=20) < datetime.now(), Clase.estado==False).update({Clase.estado: None}, synchronize_session=False)
         
-        db.session.commit()
-        time.sleep(300)
+#         db.session.commit()
+#         time.sleep(300)
 
-Assistance_Thread = threading.Thread(target=check_asistencia)
-Assistance_Thread.daemon = True
-Assistance_Thread.start()
+# Assistance_Thread = threading.Thread(target=check_asistencia)
+# Assistance_Thread.daemon = True
+# Assistance_Thread.start()
