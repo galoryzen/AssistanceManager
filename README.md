@@ -1,4 +1,4 @@
-# AssistanceManager
+# AttendanceManager
 This repository is the Final Project for Databases course at Universidad del Norte. It was made using FlaskAppBuilder and an Oracle Database.
 
 ## Features
