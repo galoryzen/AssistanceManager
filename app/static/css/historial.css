@@ -89,6 +89,12 @@ td{
     color: #a68b00;
 }
 
+.container{
+    position: absolute;
+    top: 7%;
+    bottom: 7%;
+}
+
 tr:nth-child(even){
     background-color: #f4f6fb;
 }

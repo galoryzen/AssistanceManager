@@ -25,36 +25,39 @@
     <a style="color: #fcfcfc; font-size: 25px"><i class="fas fa-user-circle"></i>{{user}}</a>
 
 </header>
-    {% for asignatura, asistencia in data.items() %}
-    <h1 class="heading">{{asignatura}}</h1>   
-    <table>
-        <thead>
-            <tr>
-                <th>Fecha</th>
-                <th>Hora de inicio</th>
-                <th>Hora de Asistencia</th>
-                <th>Estado</th>
-            </tr>
-        </thead>
-        <tbody>
-            {%for clase in asistencia%}
-            <tr>
-                <td>{{clase[2].date()}}</td>
-                <td>{{clase[2].time()}}</td>
-                {% if clase[0]!=None %}
-                <td>{{clase[0].time()}}</td>
-                {% else %}
-                <td>-</td>
-                {% endif %}
-                {% if clase[1]=='Asistencia' %}
-                <td><p class="status asistio">{{clase[1]}}</p></td>
-                {% else %}
-                <td><p class="status ausente">{{clase[1]}}</p></td>
-                {% endif %}
-            </tr>
-            {%endfor%}
-        </tbody>
-    </table>
-    {%endfor%}
+    <div class="container">
+        {% for asignatura, asistencia in data.items() %}
+        <h1 class="heading">{{asignatura}}</h1>   
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Hora de inicio</th>
+                    <th>Hora de Asistencia</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for clase in asistencia%}
+                <tr>
+                    <td>{{clase[2].date()}}</td>
+                    <td>{{clase[2].time()}}</td>
+                    {% if clase[0]!=None %}
+                    <td>{{clase[0].time()}}</td>
+                    {% else %}
+                    <td>-</td>
+                    {% endif %}
+                    {% if clase[1]=='Asistencia' %}
+                    <td><p class="status asistio">{{clase[1]}}</p></td>
+                    {% else %}
+                    <td><p class="status ausente">{{clase[1]}}</p></td>
+                    {% endif %}
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+        <br>
+        {%endfor%}
+    </div>
 </body>
 </html>
