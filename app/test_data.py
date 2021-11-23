@@ -298,10 +298,13 @@ salones = [
 ]
 
 clases = [
+    #Networking con Linux
     Clase(curso_id=7248, inicio=datetime.now() + timedelta(minutes=1), fin=datetime.now() + timedelta(minutes=120), salon_id='31K'),
     Clase(curso_id=7248, inicio=datetime(2021, 11, 19, 12, 30, 0, 0), fin=datetime(2021, 11, 19, 13, 30, 0, 0), salon_id='31G2'),
+    Clase(curso_id=7248, inicio=datetime(2021, 11, 20, 12, 30, 0, 0), fin=datetime(2021, 11, 20, 13, 30, 0, 0), salon_id='31G2'),
     Clase(curso_id=8057, inicio=datetime.now() + timedelta(minutes=1), fin=datetime.now() + timedelta(minutes=120), salon_id='VIRTUAL'),
     Clase(curso_id=8057, inicio=datetime(2021, 11, 19, 12, 30, 0, 0), fin=datetime(2021, 11, 19, 13, 30, 0, 0), salon_id='VIRTUAL'),
+    
     # Estructuras Discretas
     Clase(curso_id=8057, inicio=datetime(2021, 11, 9, 10, 30, 0, 0), fin=datetime(2021, 11, 16, 9, 30, 0, 0), salon_id='VIRTUAL', estado=True),
     Clase(curso_id=8057, inicio=datetime(2021, 11, 11, 10, 30, 0, 0), fin=datetime(2021, 11, 11, 12, 30, 0, 0), salon_id='VIRTUAL', estado=True),
@@ -339,6 +342,12 @@ asistencias = [
     Asistencia(id='test14', clase_id=10, estudiante_id=4, hora_asistencia=datetime(2021, 11, 11, 18, 32, 0, 0), estado='Asistencia', curso_id=8081),
     Asistencia(id='test15', clase_id=11, estudiante_id=4, hora_asistencia=datetime(2021, 11, 16, 18, 33, 0, 0), estado='Asistencia', curso_id=8081),
     Asistencia(id='test16', clase_id=12, estudiante_id=4, hora_asistencia=None, estado='Ausencia', curso_id=8081),
+    
+    #Networking con Linux
+    Asistencia(id='test17', clase_id=2, estudiante_id=4,hora_asistencia=datetime(2021, 11, 19, 12, 33, 30, 0), estado='Asistencia', curso_id=7248,),
+    Asistencia(id='test18', clase_id=2, docente_id=21,hora_asistencia=datetime(2021, 11, 19, 12, 30, 30, 0), estado='Asistencia', curso_id=7248,),
+    Asistencia(id='test19', clase_id=3, estudiante_id=4,hora_asistencia=datetime(2021, 11, 20, 12, 33, 30, 0), estado='Asistencia', curso_id=7248,),
+    Asistencia(id='test20', clase_id=3, docente_id=21,hora_asistencia=datetime(2021, 11, 20, 12, 30, 30, 0), estado='Asistencia', curso_id=7248,),
 ]
 
 try:
