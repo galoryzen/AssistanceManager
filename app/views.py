@@ -152,7 +152,7 @@ class ClassesView(BaseView):
     def IniciarClase(self, id):
         
         if db.session.query(Clase.estado).filter(Clase.id==id).one()[0]:
-            print('entr1')
+            print('Clase ya estaba iniciada')
             return redirect(f'http://localhost:5000/classesview/clase/{id}')
         
         
@@ -160,7 +160,7 @@ class ClassesView(BaseView):
                 join(Curso, Curso.id==Clase.curso_id).one()
                 
         if datetime.now() > profesor[3] + timedelta(minutes=20) or datetime.now() < profesor[3]:
-            print('entre')
+            print('No se puede iniciar la clase despues de 20 mins')
             return redirect(f'http://localhost:5000/classesview/clase/{id}')
 
         estudiantes = db.session.query(Clase.id, Clase.curso_id, EstudianteMatriculaCurso.estudiante_id).filter(Clase.id==id).\
@@ -200,21 +200,20 @@ class ClassesView(BaseView):
         codigo_asistencia = request.form['codC']
         codigo_profesor = request.form['codP']
 
-        test = db.session.query(Asistencia.clase_id, Asistencia.estado).filter(Asistencia.id==codigo_asistencia).all()
+        test = db.session.query(Asistencia.clase_id, Asistencia.estado, Asistencia.estudiante_id).filter(Asistencia.id==codigo_asistencia).all()
+        test_id = db.session.query(Estudiante.id).filter_by(email=g.user.email).one()[0]
         
         if len(test)==0:
+            return redirect(f'http://localhost:5000/classesview/clase/{id}')
+        elif test[0][2] != test_id:
+            print('No se puede registrar a otro estudiante')
             return redirect(f'http://localhost:5000/classesview/clase/{id}')
         
         test_profesor = db.session.query(Asistencia.clase_id).filter(Asistencia.id==codigo_profesor).all()
         
         if len(test)==0 or test[0][1]!=None:
-            print(1)
-            print(test[0][1])
             return redirect(f'http://localhost:5000/classesview/clase/{id}')
         elif test[0][0] != test_profesor[0][0]:
-            print(2)
-            print(test[0][0])
-            print(test_profesor[0][0])
             return redirect(f'http://localhost:5000/classesview/clase/{id}')
         
         
@@ -277,7 +276,7 @@ class ClassesView(BaseView):
             
             for materia in materias:
                 asistencias = db.session.query(Asistencia.hora_asistencia, Asistencia.estado, Clase.inicio).filter(Asistencia.estudiante_id==id, Asistencia.curso_id==materia[0]).\
-                            join(Clase, Clase.id==Asistencia.clase_id).all()
+                            join(Clase, Clase.id==Asistencia.clase_id).order_by(Clase.inicio).all()
                 if len(asistencias)==0:
                     continue
                 data[materia[1]] = asistencias
@@ -286,7 +285,7 @@ class ClassesView(BaseView):
         
         else:
             today = datetime.now()
-            data = db.session.query(Curso.id, Periodo.nombre, Asignatura.nombre, Docente.nombre, Clase.inicio, Clase.fin, Clase.salon_id, Clase.id).filter(Clase.inicio < today).\
+            data = db.session.query(Curso.id, Periodo.nombre, Asignatura.nombre, Docente.nombre, Clase.inicio, Clase.fin, Clase.salon_id, Clase.id).filter(Clase.inicio <= today).\
                 join(Periodo, Periodo.id==Curso.periodo_id).\
                 join(Asignatura, Asignatura.id==Curso.asignatura_id).\
                 join(Docente, Docente.id==Curso.docente_id).\
