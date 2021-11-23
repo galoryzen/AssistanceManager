@@ -20,7 +20,8 @@ Attendance Record of a student
 ## Setup
 
 1. Install all requirements using `pip install -r requirements.txt`
-2. Create a file nammed `conn_string.py` that should look like this: `cs = 'oracle://user:password@host:port/serviceName'`
+2. Create a file nammed `conn_string.py` that should look like this:  
+`cs = 'oracle://user:password@host:port/serviceName'`
 
 4. In your terminal run the following commands:
 ```
