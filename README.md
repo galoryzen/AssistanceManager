@@ -4,7 +4,7 @@ This repository is the Final Project for Databases course at Universidad del Nor
 ## Features
 - Simulate the database structure of a University
 - Assistance manager for all Students and Professors
-- Record of Assistance for every class
+- Record of Attendance for every class
 - Basic CRUD features for every table of the database only accesible to the admin
 
 ## Preview
