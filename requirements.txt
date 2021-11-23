@@ -1,0 +1,3 @@
+Flask_AppBuilder==3.3.4
+SQLAlchemy==1.3.24
+Flask==1.1.4
